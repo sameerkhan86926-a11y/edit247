@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Find an Editor — EDIT24/7</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .topbar {
+      height: 70px;
+      border-bottom: 1px solid #222;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .logo span {
+      color: #ff3b30;
+    }
+
+    .back {
+      color: #888;
+      font-size: 13px;
+    }
+
+    .back:hover {
+      color: white;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1150px;
+      margin: auto;
+    }
+
+    main {
+      padding: 40px 0 70px;
+    }
+
+    .heading {
+      margin-bottom: 30px;
+    }
+
+    .heading h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .heading p {
+      color: #888;
+      font-size: 14px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 25px;
+    }
+
+    .card {
+      background: #111;
+      border: 1px solid #242424;
+      border-radius: 14px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    /* PROJECT INFO */
+
+    .project-title {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .project-description {
+      color: #888;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .info {
+      background: #0b0b0b;
+      border: 1px solid #222;
+      border-radius: 8px;
+      padding: 13px;
+    }
+
+    .info-label {
+      color: #666;
+      font-size: 10px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .info-value {
+      font-size: 13px;
+    }
+
+    /* REQUIREMENTS */
+
+    .requirements {
+      list-style: none;
+    }
+
+    .requirements li {
+      padding: 11px 0;
+      border-bottom: 1px solid #222;
+      color: #aaa;
+      font-size: 13px;
+    }
+
+    .requirements li:last-child {
+      border-bottom: none;
+    }
+
+    /* EDITORS */
+
+    .editor {
+      border: 1px solid #292929;
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 13px;
+    }
+
+    .editor:last-child {
+      margin-bottom: 0;
+    }
+
+    .editor-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .editor-profile {
+      display: flex;
+      gap: 12px;
+    }
+
+    .editor-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+      flex-shrink: 0;
+    }
+
+    .editor-name {
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .editor-speciality {
+      color: #777;
+      font-size: 12px;
+    }
+
+    .rating {
+      font-size: 12px;
+      color: #ffb000;
+    }
+
+    .editor-details {
+      display: flex;
+      gap: 18px;
+      margin: 15px 0;
+      color: #777;
+      font-size: 11px;
+    }
+
+    .editor-price {
+      color: white;
+      font-weight: bold;
+    }
+
+    .select-btn {
+      width: 100%;
+      padding: 11px;
+      border: 1px solid #333;
+      border-radius: 7px;
+      background: #171717;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .select-btn:hover {
+      border-color: #ff3b30;
+      background: #1b1110;
+    }
+
+    /* SUMMARY */
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #222;
+      font-size: 13px;
+    }
+
+    .summary-row:last-of-type {
+      border-bottom: none;
+    }
+
+    .summary-label {
+      color: #777;
+    }
+
+    .summary-total {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .continue-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: #ff3b30;
+      padding: 14px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .small-note {
+      color: #666;
+      font-size: 11px;
+      line-height: 1.5;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .verified {
+      color: #4ade80;
+      font-size: 11px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 850px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 550px) {
+      .topbar {
+        padding: 0 20px;
+      }
+
+      .container {
+        width: 92%;
+      }
+
+      .heading h1 {
+        font-size: 25px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .editor-details {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+
+  <header class="topbar">
+
+    <div class="logo">
+      EDIT<span>24/7</span>
+    </div>
+
+    <a href="customer-dashboard.html" class="back">
+      ← Back to Dashboard
+    </a>
+
+  </header>
+
+
+  <main>
+
+    <div class="container">
+
+      <div class="heading">
+
+        <h1>
+          Find the Right Editor
+        </h1>
+
+        <p>
+          EDIT24/7 has matched your project with suitable editors.
+        </p>
+
+      </div>
+
+
+      <div class="layout">
+
+
+        <!-- LEFT -->
+
+        <div>
+
+
+          <!-- PROJECT -->
+
+          <div class="card">
+
+            <h2>
+              Project Details
+            </h2>
+
+            <div class="project-title">
+              YouTube Travel Video
+            </div>
+
+            <div class="project-description">
+              I need a professional editor for a 10–12 minute
+              travel vlog. The video should have smooth cuts,
+              background music, subtitles and cinematic
+              transitions.
+            </div>
+
+
+            <div class="info-grid">
+
+              <div class="info">
+
+                <div class="info-label">
+                  Video Type
+                </div>
+
+                <div class="info-value">
+                  YouTube
+                </div>
+
+              </div>
+
+
+              <div class="info">
+
+                <div class="info-label">
+                  Duration
+                </div>
+
+                <div class="info-value">
+                  10–12 min
+                </div>
+
+              </div>
+
+
+              <div class="info">
+
+                <div class="info-label">
+                  Deadline
+                </div>
+
+                <div class="info-value">
+                  5 Days
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- REQUIREMENTS -->
+
+          <div class="card">
+
+            <h2>
+              Requirements
+            </h2>
+
+            <ul class="requirements">
+
+              <li>
+                ✓ Professional cuts and pacing
+              </li>
+
+              <li>
+                ✓ Background music
+              </li>
+
+              <li>
+                ✓ Subtitles / captions
+              </li>
+
+              <li>
+                ✓ Color correction
+              </li>
+
+              <li>
+                ✓ Cinematic transitions
+              </li>
+
+              <li>
+                ✓ Final video in 1080p
+              </li>
+
+            </ul>
+
+          </div>
+
+
+          <!-- MATCHED EDITORS -->
+
+          <div class="card">
+
+            <h2>
+              Recommended Editors
+            </h2>
+
+
+            <!-- EDITOR 1 -->
+
+            <div class="editor">
+
+              <div class="editor-top">
+
+                <div class="editor-profile">
+
+                  <div class="editor-avatar">
+                    🎬
+                  </div>
+
+                  <div>
+
+                    <div class="editor-name">
+                      Editor Profile #1
+                    </div>
+
+                    <div class="editor-speciality">
+                      YouTube • Travel • Cinematic
+                    </div>
+
+                    <div class="verified">
+                      ✓ EDIT24/7 Verified
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="rating">
+                  ★ 4.9
+                </div>
+
+              </div>
+
+
+              <div class="editor-details">
+
+                <span>
+                  Experience: <b>3+ years</b>
+                </span>
+
+                <span>
+                  Projects: <b>120+</b>
+                </span>
+
+                <span>
+                  Price: <b class="editor-price">₹2,500</b>
+                </span>
+
+              </div>
+
+
+              <button class="select-btn">
+                Select Editor
+              </button>
+
+            </div>
+
+
+            <!-- EDITOR 2 -->
+
+            <div class="editor">
+
+              <div class="editor-top">
+
+                <div class="editor-profile">
+
+                  <div class="editor-avatar">
+                    🎥
+                  </div>
+
+                  <div>
+
+                    <div class="editor-name">
+                      Editor Profile #2
+                    </div>
+
+                    <div class="editor-speciality">
+                      YouTube • Reels • Social Media
+                    </div>
+
+                    <div class="verified">
+                      ✓ EDIT24/7 Verified
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="rating">
+                  ★ 4.8
+                </div>
+
+              </div>
+
+
+              <div class="editor-details">
+
+                <span>
+                  Experience: <b>2+ years</b>
+                </span>
+
+                <span>
+                  Projects: <b>80+</b>
+                </span>
+
+                <span>
+                  Price: <b class="editor-price">₹2,200</b>
+                </span>
+
+              </div>
+
+
+              <button class="select-btn">
+                Select Editor
+              </button>
+
+            </div>
+
+
+            <!-- EDITOR 3 -->
+
+            <div class="editor">
+
+              <div class="editor-top">
+
+                <div class="editor-profile">
+
+                  <div class="editor-avatar">
+                    ✂️
+                  </div>
+
+                  <div>
+
+                    <div class="editor-name">
+                      Editor Profile #3
+                    </div>
+
+                    <div class="editor-speciality">
+                      Travel • Documentary • Color Grading
+                    </div>
+
+                    <div class="verified">
+                      ✓ EDIT24/7 Verified
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="rating">
+                  ★ 4.7
+                </div>
+
+              </div>
+
+
+              <div class="editor-details">
+
+                <span>
+                  Experience: <b>4+ years</b>
+                </span>
+
+                <span>
+                  Projects: <b>200+</b>
+                </span>
+
+                <span>
+                  Price: <b class="editor-price">₹3,000</b>
+                </span>
+
+              </div>
+
+
+              <button class="select-btn">
+                Select Editor
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- RIGHT -->
+
+        <aside>
+
+
+          <!-- PRICE SUMMARY -->
+
+          <div class="card">
+
+            <h2>
+              Project Estimate
+            </h2>
+
+
+            <div class="summary-row">
+
+              <span class="summary-label">
+                Editing Service
+              </span>
+
+              <span>
+                ₹2,500
+              </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+              <span class="summary-label">
+                EDIT24/7 Service Fee
+              </span>
+
+              <span>
+                ₹500
+              </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+              <span class="summary-label">
+                Total
+              </span>
+
+              <span class="summary-total">
+                ₹3,000
+              </span>
+
+            </div>
+
+
+            <a
+              href="#"
+              class="continue-btn"
+            >
+              Continue to Payment →
+            </a>
+
+
+            <div class="small-note">
+              Final pricing may change depending on the
+              actual project requirements. EDIT24/7 will
+              confirm the final quote before payment.
+            </div>
+
+          </div>
+
+
+          <!-- HOW IT WORKS -->
+
+          <div class="card">
+
+            <h2>
+              How EDIT24/7 Works
+            </h2>
+
+
+            <div class="summary-row">
+
+              <span>
+                01
+              </span>
+
+              <span>
+                Choose an editor
+              </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+              <span>
+                02
+              </span>
+
+              <span>
+                Confirm the price
+              </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+              <span>
+                03
+              </span>
+
+              <span>
+                Pay through EDIT24/7
+              </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+              <span>
+                04
+              </span>
+
+              <span>
+                Editor completes the work
+              </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+              <span>
+                05
+              </span>
+
+              <span>
+                Receive final video
+              </span>
+
+            </div>
+
+          </div>
+
+
+        </aside>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</body>
+</html>
