@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Admin Dashboard — EDIT24/7</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .layout {
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar {
+      width: 250px;
+      background: #101010;
+      border-right: 1px solid #222;
+      padding: 25px 18px;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      padding: 0 10px;
+      margin-bottom: 35px;
+    }
+
+    .logo span {
+      color: #ff3b30;
+    }
+
+    .admin-label {
+      color: #ff3b30;
+      font-size: 10px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0 10px;
+      margin-bottom: 20px;
+    }
+
+    .nav-title {
+      color: #555;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0 10px;
+      margin-bottom: 10px;
+    }
+
+    .nav-item {
+      display: block;
+      padding: 12px 10px;
+      color: #888;
+      border-radius: 8px;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      background: #1b1b1b;
+      color: white;
+    }
+
+    /* MAIN */
+
+    .main {
+      margin-left: 250px;
+      width: calc(100% - 250px);
+    }
+
+    .topbar {
+      height: 75px;
+      border-bottom: 1px solid #222;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 35px;
+    }
+
+    .topbar h1 {
+      font-size: 20px;
+    }
+
+    .admin-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      background: #222;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .content {
+      padding: 35px;
+      max-width: 1400px;
+    }
+
+    /* STATS */
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 15px;
+      margin-bottom: 35px;
+    }
+
+    .stat {
+      background: #111;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .stat-label {
+      color: #777;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    .stat-value {
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .stat-note {
+      color: #666;
+      font-size: 11px;
+      margin-top: 5px;
+    }
+
+    /* SECTION */
+
+    .section {
+      margin-bottom: 35px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .section-header h2 {
+      font-size: 20px;
+    }
+
+    .view-all {
+      color: #ff3b30;
+      font-size: 13px;
+    }
+
+    /* TABLE */
+
+    .table-box {
+      background: #111;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 750px;
+      border-collapse: collapse;
+    }
+
+    th {
+      text-align: left;
+      color: #666;
+      font-size: 11px;
+      font-weight: normal;
+      padding: 15px 18px;
+      border-bottom: 1px solid #222;
+    }
+
+    td {
+      padding: 17px 18px;
+      border-bottom: 1px solid #1f1f1f;
+      font-size: 13px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .user {
+      font-weight: bold;
+    }
+
+    .subtext {
+      color: #666;
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 20px;
+      font-size: 10px;
+      background: #1c1c1c;
+    }
+
+    .status.pending {
+      color: #ffb000;
+    }
+
+    .status.verified {
+      color: #4ade80;
+    }
+
+    .status.active {
+      color: #60a5fa;
+    }
+
+    .status.completed {
+      color: #4ade80;
+    }
+
+    .status.review {
+      color: #c084fc;
+    }
+
+    /* ACTION BUTTONS */
+
+    .actions {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      border: 1px solid #333;
+      background: #151515;
+      color: #bbb;
+      padding: 7px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .action-btn:hover {
+      color: white;
+      border-color: #555;
+    }
+
+    .action-btn.primary {
+      background: #ff3b30;
+      border-color: #ff3b30;
+      color: white;
+    }
+
+    /* PRICE */
+
+    .price-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .price-card {
+      background: #111;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      padding: 22px;
+    }
+
+    .price-card h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .price-card p {
+      color: #777;
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #222;
+      padding: 10px 0;
+      font-size: 13px;
+    }
+
+    .price-row:last-child {
+      border-bottom: none;
+    }
+
+    .price-value {
+      font-weight: bold;
+    }
+
+    /* ALERT */
+
+    .alert {
+      background: #15120d;
+      border: 1px solid #3a2d17;
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 30px;
+      color: #aaa;
+      font-size: 13px;
+    }
+
+    .alert strong {
+      color: white;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 1100px) {
+      .stats {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 800px) {
+
+      .sidebar {
+        width: 70px;
+        padding: 20px 10px;
+      }
+
+      .logo {
+        font-size: 0;
+        text-align: center;
+        padding: 0;
+      }
+
+      .logo::before {
+        content: "E";
+        font-size: 24px;
+        color: #ff3b30;
+      }
+
+      .admin-label,
+      .nav-title {
+        display: none;
+      }
+
+      .nav-item {
+        text-align: center;
+        font-size: 0;
+      }
+
+      .main {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .price-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      .topbar {
+        padding: 0 18px;
+      }
+
+      .content {
+        padding: 20px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <div class="logo">
+      EDIT<span>24/7</span>
+    </div>
+
+    <div class="admin-label">
+      Admin Control Center
+    </div>
+
+
+    <div class="nav-title">
+      Overview
+    </div>
+
+    <a href="#" class="nav-item active">
+      📊 Dashboard
+    </a>
+
+
+    <div class="nav-title" style="margin-top:22px;">
+      Management
+    </div>
+
+    <a href="#" class="nav-item">
+      👥 Users
+    </a>
+
+    <a href="#" class="nav-item">
+      🎬 Editors
+    </a>
+
+    <a href="#" class="nav-item">
+      📁 Projects
+    </a>
+
+    <a href="#" class="nav-item">
+      🔎 Leads
+    </a>
+
+
+    <div class="nav-title" style="margin-top:22px;">
+      Business
+    </div>
+
+    <a href="#" class="nav-item">
+      💰 Pricing
+    </a>
+
+    <a href="#" class="nav-item">
+      💳 Payments
+    </a>
+
+    <a href="#" class="nav-item">
+      📈 Revenue
+    </a>
+
+
+    <div class="nav-title" style="margin-top:22px;">
+      System
+    </div>
+
+    <a href="#" class="nav-item">
+      ⚙ Settings
+    </a>
+
+    <a href="login.html" class="nav-item">
+      ↪ Logout
+    </a>
+
+  </aside>
+
+
+  <!-- MAIN -->
+
+  <div class="main">
+
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+      <h1>Admin Dashboard</h1>
+
+      <div class="admin-profile">
+
+        <div class="avatar">
+          AD
+        </div>
+
+        <span>
+          Administrator
+        </span>
+
+      </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+
+    <main class="content">
+
+
+      <!-- ALERT -->
+
+      <div class="alert">
+
+        <strong>Admin Preview Mode:</strong>
+        This dashboard currently displays sample data.
+        Real users, projects, payments and verification records
+        will appear after the backend is connected.
+
+      </div>
+
+
+      <!-- STATS -->
+
+      <div class="stats">
+
+        <div class="stat">
+
+          <div class="stat-label">
+            TOTAL USERS
+          </div>
+
+          <div class="stat-value">
+            0
+          </div>
+
+          <div class="stat-note">
+            Customers + Editors
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="stat-label">
+            EDITORS
+          </div>
+
+          <div class="stat-value">
+            0
+          </div>
+
+          <div class="stat-note">
+            Verified editors
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="stat-label">
+            ACTIVE PROJECTS
+          </div>
+
+          <div class="stat-value">
+            0
+          </div>
+
+          <div class="stat-note">
+            Currently running
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="stat-label">
+            PLATFORM REVENUE
+          </div>
+
+          <div class="stat-value">
+            ₹0
+          </div>
+
+          <div class="stat-note">
+            Total commission
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="stat-label">
+            PENDING REVIEW
+          </div>
+
+          <div class="stat-value">
+            0
+          </div>
+
+          <div class="stat-note">
+            Applications
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- EDITOR VERIFICATION -->
+
+      <section class="section">
+
+        <div class="section-header">
+
+          <h2>
+            Editor Applications
+          </h2>
+
+          <a href="#" class="view-all">
+            View All
+          </a>
+
+        </div>
+
+
+        <div class="table-box">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th>
+                  EDITOR
+                </th>
+
+                <th>
+                  EXPERIENCE
+                </th>
+
+                <th>
+                  SPECIALITY
+                </th>
+
+                <th>
+                  STATUS
+                </th>
+
+                <th>
+                  ACTION
+                </th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody>
+
+              <tr>
+
+                <td>
+
+                  <div class="user">
+                    No applications yet
+                  </div>
+
+                  <div class="subtext">
+                    New editor applications will appear here.
+                  </div>
+
+                </td>
+
+                <td>
+                  —
+                </td>
+
+                <td>
+                  —
+                </td>
+
+                <td>
+
+                  <span class="status pending">
+                    Waiting
+                  </span>
+
+                </td>
+
+                <td>
+
+                  <div class="actions">
+
+                    <button class="action-btn">
+                      Review
+                    </button>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+
+      <!-- PROJECTS -->
+
+      <section class="section">
+
+        <div class="section-header">
+
+          <h2>
+            Recent Projects
+          </h2>
+
+          <a href="#" class="view-all">
+            View All
+          </a>
+
+        </div>
+
+
+        <div class="table-box">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th>
+                  PROJECT
+                </th>
+
+                <th>
+                  CUSTOMER
+                </th>
+
+                <th>
+                  EDITOR
+                </th>
+
+                <th>
+                  BUDGET
+                </th>
+
+                <th>
+                  STATUS
+                </th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody>
+
+              <tr>
+
+                <td>
+
+                  <div class="user">
+                    No projects yet
+                  </div>
+
+                  <div class="subtext">
+                    Customer projects will appear here.
+                  </div>
+
+                </td>
+
+                <td>
+                  —
+                </td>
+
+                <td>
+                  —
+                </td>
+
+                <td>
+                  —
+                </td>
+
+                <td>
+
+                  <span class="status pending">
+                    Waiting
+                  </span>
+
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+
+      <!-- PRICING -->
+
+      <section class="section">
+
+        <div class="section-header">
+
+          <h2>
+            Pricing Control
+          </h2>
+
+          <a href="#" class="view-all">
+            Manage Pricing
+          </a>
+
+        </div>
+
+
+        <div class="price-grid">
+
+
+          <div class="price-card">
+
+            <h3>
+              Customer Price
+            </h3>
+
+            <p>
+              Average amount charged to customers.
+            </p>
+
+
+            <div class="price-row">
+
+              <span>
+                Basic Video
+              </span>
+
+              <span class="price-value">
+                ₹1,000+
+              </span>
+
+            </div>
+
+
+            <div class="price-row">
+
+              <span>
+                YouTube Video
+              </span>
+
+              <span class="price-value">
+                ₹2,000+
+              </span>
+
+            </div>
+
+
+            <div class="price-row">
+
+              <span>
+                Advanced Editing
+              </span>
+
+              <span class="price-value">
+                ₹5,000+
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="price-card">
+
+            <h3>
+              Platform Commission
+            </h3>
+
+            <p>
+              EDIT24/7 revenue from each project.
+            </p>
+
+
+            <div class="price-row">
+
+              <span>
+                Platform Fee
+              </span>
+
+              <span class="price-value">
+                Not Set
+              </span>
+
+            </div>
+
+
+            <div class="price-row">
+
+              <span>
+                Editor Payout
+              </span>
+
+              <span class="price-value">
+                Not Set
+              </span>
+
+            </div>
+
+
+            <div class="price-row">
+
+              <span>
+                EDIT24/7 Margin
+              </span>
+
+              <span class="price-value">
+                Not Set
+              </span>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+      </section>
+
+
+      <!-- QUICK ACTIONS -->
+
+      <section class="section">
+
+        <div class="section-header">
+
+          <h2>
+            Quick Actions
+          </h2>
+
+        </div>
+
+
+        <div class="actions">
+
+          <button class="action-btn primary">
+            Review Editors
+          </button>
+
+          <button class="action-btn">
+            View Leads
+          </button>
+
+          <button class="action-btn">
+            Manage Projects
+          </button>
+
+          <button class="action-btn">
+            Manage Pricing
+          </button>
+
+          <button class="action-btn">
+            View Payments
+          </button>
+
+        </div>
+
+      </section>
+
+
+    </main>
+
+  </div>
+
+</div>
+
+</body>
+</html>
