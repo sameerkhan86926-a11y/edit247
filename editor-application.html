@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Become an Editor — EDIT24/7</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0a0a0a;
+      color: #ffffff;
+      line-height: 1.6;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 850px;
+      margin: auto;
+    }
+
+    header {
+      border-bottom: 1px solid #222;
+      padding: 22px 0;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .logo span {
+      color: #ff3b30;
+    }
+
+    main {
+      padding: 55px 0 80px;
+    }
+
+    .heading {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .badge {
+      display: inline-block;
+      border: 1px solid #333;
+      color: #aaa;
+      padding: 6px 13px;
+      border-radius: 50px;
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .heading h1 {
+      font-size: 44px;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+
+    .heading h1 span {
+      color: #ff3b30;
+    }
+
+    .heading p {
+      color: #888;
+      max-width: 650px;
+      margin: auto;
+    }
+
+    .form-box {
+      background: #111;
+      border: 1px solid #252525;
+      border-radius: 16px;
+      padding: 32px;
+    }
+
+    .section {
+      border-bottom: 1px solid #252525;
+      padding-bottom: 30px;
+      margin-bottom: 30px;
+    }
+
+    .section:last-of-type {
+      border-bottom: none;
+    }
+
+    .section-title {
+      font-size: 21px;
+      margin-bottom: 22px;
+    }
+
+    .section-title span {
+      color: #ff3b30;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .required {
+      color: #ff3b30;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      background: #090909;
+      color: white;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #ff3b30;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .skills {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .skill {
+      border: 1px solid #333;
+      padding: 12px;
+      border-radius: 8px;
+      color: #bbb;
+      font-weight: normal;
+    }
+
+    .skill input {
+      width: auto;
+      margin-right: 8px;
+    }
+
+    .rate-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .info {
+      background: #171717;
+      border: 1px solid #292929;
+      border-radius: 10px;
+      padding: 14px;
+      color: #888;
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .portfolio-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .portfolio-item {
+      background: #0a0a0a;
+      border: 1px solid #333;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    .portfolio-item input {
+      margin-top: 8px;
+    }
+
+    .terms {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: #aaa;
+      font-size: 14px;
+      margin-bottom: 22px;
+    }
+
+    .terms input {
+      width: auto;
+      margin-top: 5px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 9px;
+      background: #ff3b30;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      opacity: 0.9;
+    }
+
+    .bottom-note {
+      text-align: center;
+      color: #666;
+      font-size: 13px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 650px) {
+
+      .heading h1 {
+        font-size: 34px;
+      }
+
+      .form-box {
+        padding: 20px;
+      }
+
+      .row,
+      .rate-box,
+      .skills {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+
+  <header>
+    <div class="container">
+
+      <div class="logo">
+        EDIT<span>24/7</span>
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- MAIN -->
+
+  <main>
+
+    <div class="container">
+
+      <div class="heading">
+
+        <div class="badge">
+          🎬 EDIT24/7 Editor Network
+        </div>
+
+        <h1>
+          Become a <span>Verified Editor.</span>
+        </h1>
+
+        <p>
+          Showcase your skills, build your reputation and
+          connect with clients looking for video editors.
+        </p>
+
+      </div>
+
+
+      <div class="form-box">
+
+        <form>
+
+
+          <!-- BASIC INFORMATION -->
+
+          <div class="section">
+
+            <div class="section-title">
+              <span>01.</span> Basic Information
+            </div>
+
+
+            <div class="row">
+
+              <div class="form-group">
+
+                <label for="firstName">
+                  First Name <span class="required">*</span>
+                </label>
+
+                <input
+                  type="text"
+                  id="firstName"
+                  placeholder="Your first name"
+                  required
+                >
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label for="lastName">
+                  Last Name <span class="required">*</span>
+                </label>
+
+                <input
+                  type="text"
+                  id="lastName"
+                  placeholder="Your last name"
+                  required
+                >
+
+              </div>
+
+            </div>
+
+
+            <div class="row">
+
+              <div class="form-group">
+
+                <label for="email">
+                  Email <span class="required">*</span>
+                </label>
+
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="you@example.com"
+                  required
+                >
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label for="phone">
+                  Phone Number <span class="required">*</span>
+                </label>
+
+                <input
+                  type="tel"
+                  id="phone"
+                  placeholder="+91 XXXXX XXXXX"
+                  required
+                >
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- EXPERIENCE -->
+
+          <div class="section">
+
+            <div class="section-title">
+              <span>02.</span> Your Experience
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="experience">
+                Video Editing Experience
+              </label>
+
+              <select id="experience">
+
+                <option value="">
+                  Select your experience
+                </option>
+
+                <option>Less than 1 year</option>
+                <option>1–2 years</option>
+                <option>2–3 years</option>
+                <option>3–5 years</option>
+                <option>5+ years</option>
+
+              </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                What type of videos do you edit?
+              </label>
+
+              <div class="skills">
+
+                <label class="skill">
+                  <input type="checkbox">
+                  YouTube Videos
+                </label>
+
+                <label class="skill">
+                  <input type="checkbox">
+                  Reels / Shorts
+                </label>
+
+                <label class="skill">
+                  <input type="checkbox">
+                  Podcasts
+                </label>
+
+                <label class="skill">
+                  <input type="checkbox">
+                  Gaming
+                </label>
+
+                <label class="skill">
+                  <input type="checkbox">
+                  Weddings
+                </label>
+
+                <label class="skill">
+                  <input type="checkbox">
+                  Advertisements
+                </label>
+
+                <label class="skill">
+                  <input type="checkbox">
+                  Documentary
+                </label>
+
+                <label class="skill">
+                  <input type="checkbox">
+                  Social Media
+                </label>
+
+              </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="about">
+                Tell us about your editing experience
+              </label>
+
+              <textarea
+                id="about"
+                placeholder="Tell clients what you are good at, your experience and your editing style..."
+              ></textarea>
+
+            </div>
+
+          </div>
+
+
+          <!-- SOFTWARE -->
+
+          <div class="section">
+
+            <div class="section-title">
+              <span>03.</span> Editing Skills
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Software you use
+              </label>
+
+              <div class="skills">
+
+                <label class="skill">
+                  <input type="checkbox">
+                  Adobe Premiere Pro
+                </label>
+
+                <label class="skill">
+                  <input type="checkbox">
+                  After Effects
+                </label>
+
+                <label class="skill">
+                  <input type="checkbox">
+                  DaVinci Resolve
+                </label>
+
+                <label class="skill">
+                  <input type="checkbox">
+                  Final Cut Pro
+                </label>
+
+                <label class="skill">
+                  <input type="checkbox">
+                  CapCut
+                </label>
+
+                <label class="skill">
+                  <input type="checkbox">
+                  Other Software
+                </label>
+
+              </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="skills">
+                Describe your strongest skills
+              </label>
+
+              <textarea
+                id="skills"
+                placeholder="Example: Cinematic editing, color grading, motion graphics, subtitles..."
+              ></textarea>
+
+            </div>
+
+          </div>
+
+
+          <!-- PORTFOLIO -->
+
+          <div class="section">
+
+            <div class="section-title">
+              <span>04.</span> Portfolio
+            </div>
+
+
+            <div class="info">
+
+              Add links to your previous work.
+              You can use YouTube, Google Drive, Vimeo
+              or another portfolio platform.
+
+            </div>
+
+
+            <div class="portfolio-list">
+
+              <div class="portfolio-item">
+
+                <label>
+                  Portfolio / Sample 1
+                </label>
+
+                <input
+                  type="url"
+                  placeholder="https://..."
+                >
+
+              </div>
+
+
+              <div class="portfolio-item">
+
+                <label>
+                  Portfolio / Sample 2
+                </label>
+
+                <input
+                  type="url"
+                  placeholder="https://..."
+                >
+
+              </div>
+
+
+              <div class="portfolio-item">
+
+                <label>
+                  Portfolio / Sample 3
+                </label>
+
+                <input
+                  type="url"
+                  placeholder="https://..."
+                >
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- RATE -->
+
+          <div class="section">
+
+            <div class="section-title">
+              <span>05.</span> Your Rate
+            </div>
+
+
+            <div class="info">
+
+              This is your expected starting rate.
+              EDIT24/7 may recommend pricing based on
+              project complexity and market rates.
+
+            </div>
+
+
+            <div class="rate-box">
+
+              <div class="form-group">
+
+                <label for="rateType">
+                  Rate Type
+                </label>
+
+                <select id="rateType">
+
+                  <option>Per Video</option>
+                  <option>Per Minute</option>
+                  <option>Per Hour</option>
+                  <option>Project Based</option>
+
+                </select>
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label for="rate">
+                  Expected Rate (₹)
+                </label>
+
+                <input
+                  type="number"
+                  id="rate"
+                  placeholder="Example: 2500"
+                >
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- AVAILABILITY -->
+
+          <div class="section">
+
+            <div class="section-title">
+              <span>06.</span> Availability
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="availability">
+                How many projects can you handle?
+              </label>
+
+              <select id="availability">
+
+                <option>1 project at a time</option>
+                <option>2–3 projects</option>
+                <option>4–5 projects</option>
+                <option>5+ projects</option>
+
+              </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="hours">
+                Typical working hours
+              </label>
+
+              <input
+                type="text"
+                id="hours"
+                placeholder="Example: 6–8 hours/day"
+              >
+
+            </div>
+
+          </div>
+
+
+          <!-- VERIFICATION -->
+
+          <div class="section">
+
+            <div class="section-title">
+              <span>07.</span> Verification
+            </div>
+
+
+            <div class="info">
+
+              EDIT24/7 may verify your identity and skills
+              before approving your editor profile.
+
+              <br><br>
+
+              You will be asked for verification documents
+              through a secure verification process.
+              Do not upload sensitive documents through
+              this basic form.
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="sample">
+                Tell us about your best editing sample
+              </label>
+
+              <textarea
+                id="sample"
+                placeholder="Describe the sample you are most proud of..."
+              ></textarea>
+
+            </div>
+
+          </div>
+
+
+          <!-- TERMS -->
+
+          <label class="terms">
+
+            <input type="checkbox" required>
+
+            <span>
+              I confirm that the information provided is accurate
+              and I agree to the EDIT24/7 editor terms and
+              verification process.
+            </span>
+
+          </label>
+
+
+          <!-- SUBMIT -->
+
+          <button
+            type="submit"
+            class="submit-btn"
+          >
+            Submit Editor Application →
+          </button>
+
+
+          <div class="bottom-note">
+
+            Your application will be reviewed before your
+            editor profile becomes publicly available.
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</body>
+</html>
