@@ -20,11 +20,18 @@
       min-height: 100vh;
     }
 
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
     .container {
       width: 90%;
       max-width: 450px;
       margin: auto;
     }
+
+    /* HEADER */
 
     header {
       padding: 25px 0;
@@ -34,14 +41,17 @@
     .logo {
       font-size: 25px;
       font-weight: 800;
+      letter-spacing: -1px;
     }
 
     .logo span {
       color: #ff3b30;
     }
 
+    /* MAIN */
+
     main {
-      padding: 50px 0;
+      padding: 40px 0 60px;
     }
 
     .login-box {
@@ -64,36 +74,62 @@
       margin-bottom: 30px;
     }
 
+    /* ROLE */
+
+    .role-title {
+      color: #777;
+      font-size: 12px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
     .role-selector {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
       margin-bottom: 25px;
     }
 
     .role {
       border: 1px solid #333;
       border-radius: 9px;
-      padding: 14px;
+      padding: 13px 5px;
       text-align: center;
       cursor: pointer;
       color: #aaa;
+      font-size: 12px;
+      transition: 0.2s;
     }
 
     .role:hover {
+      border-color: #666;
+      color: white;
+    }
+
+    .role.active {
       border-color: #ff3b30;
+      background: #171010;
       color: white;
     }
 
     .role input {
-      margin-right: 7px;
+      display: none;
     }
+
+    .role-icon {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+
+    /* FORM */
 
     .form-group {
       margin-bottom: 20px;
     }
 
-    label {
+    label.form-label {
       display: block;
       margin-bottom: 8px;
       font-size: 14px;
@@ -109,6 +145,12 @@
       border-radius: 8px;
       color: white;
       font-size: 15px;
+      outline: none;
+    }
+
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #666;
     }
 
     .password-row {
@@ -120,8 +162,13 @@
     .forgot {
       color: #ff3b30;
       font-size: 13px;
-      text-decoration: none;
     }
+
+    .forgot:hover {
+      text-decoration: underline;
+    }
+
+    /* LOGIN BUTTON */
 
     .login-btn {
       width: 100%;
@@ -134,6 +181,26 @@
       font-weight: bold;
       cursor: pointer;
     }
+
+    .login-btn:hover {
+      opacity: 0.9;
+    }
+
+    /* MESSAGE */
+
+    .message {
+      display: none;
+      margin-bottom: 18px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #241212;
+      border: 1px solid #4a2222;
+      color: #ff8b84;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    /* DIVIDER */
 
     .divider {
       display: flex;
@@ -152,6 +219,8 @@
       flex: 1;
     }
 
+    /* SIGNUP */
+
     .signup {
       text-align: center;
       color: #888;
@@ -160,8 +229,11 @@
 
     .signup a {
       color: #ff3b30;
-      text-decoration: none;
       font-weight: bold;
+    }
+
+    .signup a:hover {
+      text-decoration: underline;
     }
 
     .security {
@@ -171,25 +243,53 @@
       margin-top: 20px;
     }
 
+    .back-home {
+      display: block;
+      text-align: center;
+      color: #666;
+      font-size: 12px;
+      margin-top: 18px;
+    }
+
+    .back-home:hover {
+      color: white;
+    }
+
+    /* MOBILE */
+
     @media (max-width: 500px) {
+
       .login-box {
         padding: 22px;
       }
 
       .role-selector {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
       }
+
+      .role:last-child {
+        grid-column: 1 / -1;
+      }
+
     }
   </style>
 </head>
 
 <body>
 
+
+  <!-- HEADER -->
+
   <header>
-    <div class="logo">
+
+    <a href="index.html" class="logo">
       EDIT<span>24/7</span>
-    </div>
+    </a>
+
   </header>
+
+
+  <!-- MAIN -->
 
   <main>
 
@@ -197,42 +297,107 @@
 
       <div class="login-box">
 
-        <h1>Welcome Back</h1>
+        <h1>
+          Welcome Back
+        </h1>
 
         <p class="subtitle">
           Login to your EDIT24/7 account.
         </p>
 
 
+        <!-- ROLE -->
+
+        <div class="role-title">
+          Login as
+        </div>
+
         <div class="role-selector">
 
-          <label class="role">
+
+          <!-- CUSTOMER -->
+
+          <label class="role active">
+
             <input
               type="radio"
               name="role"
               value="customer"
               checked
             >
+
+            <span class="role-icon">
+              👤
+            </span>
+
             Customer
+
           </label>
 
+
+          <!-- EDITOR -->
+
           <label class="role">
+
             <input
               type="radio"
               name="role"
               value="editor"
             >
+
+            <span class="role-icon">
+              🎬
+            </span>
+
             Editor
+
+          </label>
+
+
+          <!-- ADMIN -->
+
+          <label class="role">
+
+            <input
+              type="radio"
+              name="role"
+              value="admin"
+            >
+
+            <span class="role-icon">
+              ⚙️
+            </span>
+
+            Admin
+
           </label>
 
         </div>
 
 
-        <form>
+        <!-- ERROR / MESSAGE -->
+
+        <div
+          class="message"
+          id="message"
+        >
+          Please enter your email and password.
+        </div>
+
+
+        <!-- LOGIN FORM -->
+
+        <form id="loginForm">
+
+
+          <!-- EMAIL -->
 
           <div class="form-group">
 
-            <label for="email">
+            <label
+              class="form-label"
+              for="email"
+            >
               Email
             </label>
 
@@ -246,11 +411,16 @@
           </div>
 
 
+          <!-- PASSWORD -->
+
           <div class="form-group">
 
             <div class="password-row">
 
-              <label for="password">
+              <label
+                class="form-label"
+                for="password"
+              >
                 Password
               </label>
 
@@ -273,6 +443,8 @@
           </div>
 
 
+          <!-- LOGIN -->
+
           <button
             type="submit"
             class="login-btn"
@@ -283,10 +455,14 @@
         </form>
 
 
+        <!-- DIVIDER -->
+
         <div class="divider">
           OR
         </div>
 
+
+        <!-- SIGNUP -->
 
         <div class="signup">
 
@@ -305,9 +481,135 @@
         🔒 Your account information is protected.
       </div>
 
+
+      <a
+        href="index.html"
+        class="back-home"
+      >
+        ← Back to EDIT24/7
+      </a>
+
     </div>
 
   </main>
+
+
+  <!-- DEMO LOGIN SYSTEM -->
+
+  <script>
+
+    const roles = document.querySelectorAll(".role");
+
+    const form = document.getElementById("loginForm");
+
+    const message = document.getElementById("message");
+
+
+    /*
+      ROLE SELECTION
+    */
+
+    roles.forEach(function(role) {
+
+      role.addEventListener("click", function() {
+
+        roles.forEach(function(item) {
+          item.classList.remove("active");
+        });
+
+        role.classList.add("active");
+
+        const radio = role.querySelector("input");
+
+        radio.checked = true;
+
+      });
+
+    });
+
+
+    /*
+      LOGIN
+
+      NOTE:
+      This is only frontend/demo routing.
+
+      Real authentication will be connected
+      later with database + backend.
+    */
+
+    form.addEventListener("submit", function(event) {
+
+      event.preventDefault();
+
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const password =
+        document.getElementById("password").value.trim();
+
+      const selectedRole =
+        document.querySelector(
+          'input[name="role"]:checked'
+        ).value;
+
+
+      if (!email || !password) {
+
+        message.style.display = "block";
+
+        message.textContent =
+          "Please enter your email and password.";
+
+        return;
+      }
+
+
+      message.style.display = "none";
+
+
+      /*
+        CUSTOMER
+      */
+
+      if (selectedRole === "customer") {
+
+        window.location.href =
+          "customer-dashboard.html";
+
+        return;
+      }
+
+
+      /*
+        EDITOR
+      */
+
+      if (selectedRole === "editor") {
+
+        window.location.href =
+          "editor-dashboard.html";
+
+        return;
+      }
+
+
+      /*
+        ADMIN
+      */
+
+      if (selectedRole === "admin") {
+
+        window.location.href =
+          "admin-dashboard.html";
+
+        return;
+      }
+
+    });
+
+  </script>
 
 </body>
 </html>
