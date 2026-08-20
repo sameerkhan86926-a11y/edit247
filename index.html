@@ -1,1 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>EDIT24/7 — Verified Video Editors</title>
+
+  <meta
+    name="description"
+    content="Find verified video editors at fair prices with EDIT24/7."
+  >
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0a0a0a;
+      color: #ffffff;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    /* NAVBAR */
+
+    nav {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #222;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: #ff3b30;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #b8b8b8;
+      font-size: 15px;
+    }
+
+    .nav-links a:hover {
+      color: white;
+    }
+
+    .login-btn {
+      border: 1px solid #333;
+      padding: 10px 18px;
+      border-radius: 8px;
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 650px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 850px;
+      margin: auto;
+    }
+
+    .badge {
+      display: inline-block;
+      border: 1px solid #333;
+      color: #bdbdbd;
+      padding: 7px 14px;
+      border-radius: 50px;
+      font-size: 13px;
+      margin-bottom: 25px;
+    }
+
+    .hero h1 {
+      font-size: clamp(45px, 7vw, 82px);
+      line-height: 1.02;
+      letter-spacing: -4px;
+      margin-bottom: 25px;
+    }
+
+    .hero h1 span {
+      color: #ff3b30;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: auto;
+      color: #a5a5a5;
+      font-size: 18px;
+    }
+
+    .hero-buttons {
+      margin-top: 35px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .primary-btn {
+      background: #ff3b30;
+      color: white;
+      padding: 14px 25px;
+      border-radius: 9px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+    }
+
+    .secondary-btn {
+      border: 1px solid #333;
+      padding: 14px 25px;
+      border-radius: 9px;
+      color: white;
+    }
+
+    .trust {
+      margin-top: 45px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      color: #888;
+      font-size: 14px;
+    }
+
+    /* SECTION */
+
+    section {
+      padding: 90px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-title h2 {
+      font-size: 42px;
+      letter-spacing: -1.5px;
+      margin-bottom: 12px;
+    }
+
+    .section-title p {
+      color: #888;
+    }
+
+    /* HOW IT WORKS */
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .step {
+      background: #111;
+      border: 1px solid #222;
+      padding: 30px;
+      border-radius: 14px;
+    }
+
+    .step-number {
+      color: #ff3b30;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .step h3 {
+      margin-bottom: 10px;
+    }
+
+    .step p {
+      color: #888;
+      font-size: 14px;
+    }
+
+    /* PRICE */
+
+    .price-box {
+      max-width: 800px;
+      margin: auto;
+      background: #111;
+      border: 1px solid #292929;
+      border-radius: 18px;
+      padding: 45px;
+      text-align: center;
+    }
+
+    .price-box h3 {
+      font-size: 30px;
+      margin-bottom: 15px;
+    }
+
+    .price-box p {
+      color: #888;
+      margin-bottom: 25px;
+    }
+
+    /* EDITOR */
+
+    .editor-section {
+      background: #0f0f0f;
+    }
+
+    .editor-box {
+      max-width: 900px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .editor-box h2 {
+      font-size: 45px;
+      margin-bottom: 15px;
+    }
+
+    .editor-box p {
+      color: #999;
+      margin-bottom: 30px;
+    }
+
+    /* FEATURES */
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .feature {
+      text-align: center;
+      padding: 25px;
+    }
+
+    .feature-icon {
+      font-size: 30px;
+      margin-bottom: 15px;
+    }
+
+    .feature p {
+      color: #888;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      border-top: 1px solid #222;
+      padding: 40px 0;
+      color: #777;
+      text-align: center;
+    }
+
+    .footer-logo {
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 800px) {
+
+      .nav-links a:not(.login-btn) {
+        display: none;
+      }
+
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .features {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero {
+        min-height: 600px;
+      }
+
+      .hero h1 {
+        letter-spacing: -2px;
+      }
+
+      .section-title h2 {
+        font-size: 34px;
+      }
+
+    }
+
+    @media (max-width: 500px) {
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .price-box {
+        padding: 30px 20px;
+      }
+
+      .trust {
+        gap: 15px;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+
+  <header>
+    <div class="container">
+      <nav>
+
+        <div class="logo">
+          EDIT<span>24/7</span>
+        </div>
+
+        <div class="nav-links">
+          <a href="#how-it-works">How It Works</a>
+          <a href="#price">Pricing</a>
+          <a href="#editors">Editors</a>
+          <a href="#become-editor">Become an Editor</a>
+          <a href="#" class="login-btn">Login</a>
+        </div>
+
+      </nav>
+    </div>
+  </header>
+
+
+  <!-- HERO -->
+
+  <main>
+
+    <section class="hero">
+
+      <div class="container">
+
+        <div class="hero-content">
+
+          <div class="badge">
+            ✓ Verified Video Editing Marketplace
+          </div>
+
+          <h1>
+            Get Your Video<br>
+            Edited by a <span>Pro.</span>
+          </h1>
+
+          <p>
+            Find verified video editors, get a fair price estimate,
+            and get your project completed safely through EDIT24/7.
+          </p>
+
+          <div class="hero-buttons">
+
+            <a href="#" class="primary-btn">
+              Get an Editor →
+            </a>
+
+            <a href="#become-editor" class="secondary-btn">
+              Become an Editor
+            </a>
+
+          </div>
+
+          <div class="trust">
+
+            <span>✓ Verified Editors</span>
+            <span>✓ Fair Pricing</span>
+            <span>✓ Secure Projects</span>
+            <span>✓ Quality Focused</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- HOW IT WORKS -->
+
+    <section id="how-it-works">
+
+      <div class="container">
+
+        <div class="section-title">
+
+          <h2>How EDIT24/7 Works</h2>
+
+          <p>
+            From your idea to the final video.
+          </p>
+
+        </div>
+
+
+        <div class="steps">
+
+          <div class="step">
+
+            <div class="step-number">01</div>
+
+            <h3>Tell Us What You Need</h3>
+
+            <p>
+              Share your video requirements, deadline,
+              style and references.
+            </p>
+
+          </div>
+
+
+          <div class="step">
+
+            <div class="step-number">02</div>
+
+            <h3>Get a Fair Price</h3>
+
+            <p>
+              Get an estimated market price based
+              on your project's requirements.
+            </p>
+
+          </div>
+
+
+          <div class="step">
+
+            <div class="step-number">03</div>
+
+            <h3>Choose Your Editor</h3>
+
+            <p>
+              Compare verified editors, portfolios,
+              ratings and proposals.
+            </p>
+
+          </div>
+
+
+          <div class="step">
+
+            <div class="step-number">04</div>
+
+            <h3>Get Your Video</h3>
+
+            <p>
+              Work with your editor and receive
+              your completed project.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- PRICE -->
+
+    <section id="price">
+
+      <div class="container">
+
+        <div class="section-title">
+
+          <h2>Not Sure What It Should Cost?</h2>
+
+          <p>
+            Tell us about your project and get an estimated price.
+          </p>
+
+        </div>
+
+
+        <div class="price-box">
+
+          <h3>Know Your Budget Before You Hire.</h3>
+
+          <p>
+            Our pricing system considers video length,
+            editing complexity, deadline and services required.
+          </p>
+
+          <a href="#" class="primary-btn">
+            Estimate My Project →
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- EDITORS -->
+
+    <section id="editors" class="editor-section">
+
+      <div class="container">
+
+        <div class="section-title">
+
+          <h2>Work With Verified Editors</h2>
+
+          <p>
+            Skilled creators ready to bring your ideas to life.
+          </p>
+
+        </div>
+
+
+        <div class="features">
+
+          <div class="feature">
+
+            <div class="feature-icon">✓</div>
+
+            <h3>Identity Verified</h3>
+
+            <p>
+              Verified users and professional profiles.
+            </p>
+
+          </div>
+
+
+          <div class="feature">
+
+            <div class="feature-icon">★</div>
+
+            <h3>Skill Verified</h3>
+
+            <p>
+              Editors can be evaluated through portfolio
+              and skill assessments.
+            </p>
+
+          </div>
+
+
+          <div class="feature">
+
+            <div class="feature-icon">⚡</div>
+
+            <h3>Fast Delivery</h3>
+
+            <p>
+              Find editors according to your deadline.
+            </p>
+
+          </div>
+
+
+          <div class="feature">
+
+            <div class="feature-icon">❤</div>
+
+            <h3>Rated by Clients</h3>
+
+            <p>
+              Reviews help you choose the right editor.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- BECOME EDITOR -->
+
+    <section id="become-editor">
+
+      <div class="container">
+
+        <div class="editor-box">
+
+          <h2>Are You a Video Editor?</h2>
+
+          <p>
+            Get verified, showcase your skills and
+            connect with genuine clients.
+          </p>
+
+          <a href="#" class="primary-btn">
+            Become an EDIT24/7 Editor →
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="container">
+
+      <div class="footer-logo">
+        EDIT24/7
+      </div>
+
+      <p>
+        Verified editors. Fair prices. Better videos.
+      </p>
+
+      <p style="margin-top: 15px;">
+        © 2026 EDIT24/7. All rights reserved.
+      </p>
+
+    </div>
+
+  </footer>
+
+</body>
+</html>
