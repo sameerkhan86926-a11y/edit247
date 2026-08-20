@@ -77,6 +77,10 @@
       border-radius: 8px;
     }
 
+    .login-btn:hover {
+      border-color: #666;
+    }
+
     /* HERO */
 
     .hero {
@@ -128,6 +132,7 @@
     }
 
     .primary-btn {
+      display: inline-block;
       background: #ff3b30;
       color: white;
       padding: 14px 25px;
@@ -137,11 +142,20 @@
       cursor: pointer;
     }
 
+    .primary-btn:hover {
+      opacity: 0.9;
+    }
+
     .secondary-btn {
+      display: inline-block;
       border: 1px solid #333;
       padding: 14px 25px;
       border-radius: 9px;
       color: white;
+    }
+
+    .secondary-btn:hover {
+      border-color: #666;
     }
 
     .trust {
@@ -316,7 +330,6 @@
       .section-title h2 {
         font-size: 34px;
       }
-
     }
 
     @media (max-width: 500px) {
@@ -333,6 +346,18 @@
         gap: 15px;
       }
 
+      .hero p {
+        font-size: 16px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .hero-buttons a {
+        text-align: center;
+      }
     }
   </style>
 </head>
@@ -342,23 +367,43 @@
   <!-- NAVBAR -->
 
   <header>
+
     <div class="container">
+
       <nav>
 
-        <div class="logo">
+        <a href="index.html" class="logo">
           EDIT<span>24/7</span>
-        </div>
+        </a>
 
         <div class="nav-links">
-          <a href="#how-it-works">How It Works</a>
-          <a href="#price">Pricing</a>
-          <a href="#editors">Editors</a>
-          <a href="#become-editor">Become an Editor</a>
-          <a href="#" class="login-btn">Login</a>
+
+          <a href="#how-it-works">
+            How It Works
+          </a>
+
+          <a href="#price">
+            Pricing
+          </a>
+
+          <a href="#editors">
+            Editors
+          </a>
+
+          <a href="#become-editor">
+            Become an Editor
+          </a>
+
+          <a href="login.html" class="login-btn">
+            Login
+          </a>
+
         </div>
 
       </nav>
+
     </div>
+
   </header>
 
 
@@ -388,21 +433,30 @@
 
           <div class="hero-buttons">
 
-            <a href="customer-project.html" class="primary-btn">
-  Get an Editor →
-</a>
+            <a
+              href="create-project.html"
+              class="primary-btn"
+            >
+              Get an Editor →
+            </a>
 
-            <a href="editor-application.html" class="secondary-btn">
-  Become an Editor
-</a>
+            <a
+              href="editor-application.html"
+              class="secondary-btn"
+            >
+              Become an Editor
+            </a>
 
           </div>
 
           <div class="trust">
 
             <span>✓ Verified Editors</span>
+
             <span>✓ Fair Pricing</span>
+
             <span>✓ Secure Projects</span>
+
             <span>✓ Quality Focused</span>
 
           </div>
@@ -422,7 +476,9 @@
 
         <div class="section-title">
 
-          <h2>How EDIT24/7 Works</h2>
+          <h2>
+            How EDIT24/7 Works
+          </h2>
 
           <p>
             From your idea to the final video.
@@ -435,9 +491,13 @@
 
           <div class="step">
 
-            <div class="step-number">01</div>
+            <div class="step-number">
+              01
+            </div>
 
-            <h3>Tell Us What You Need</h3>
+            <h3>
+              Tell Us What You Need
+            </h3>
 
             <p>
               Share your video requirements, deadline,
@@ -449,9 +509,13 @@
 
           <div class="step">
 
-            <div class="step-number">02</div>
+            <div class="step-number">
+              02
+            </div>
 
-            <h3>Get a Fair Price</h3>
+            <h3>
+              Get a Fair Price
+            </h3>
 
             <p>
               Get an estimated market price based
@@ -463,9 +527,13 @@
 
           <div class="step">
 
-            <div class="step-number">03</div>
+            <div class="step-number">
+              03
+            </div>
 
-            <h3>Choose Your Editor</h3>
+            <h3>
+              Choose Your Editor
+            </h3>
 
             <p>
               Compare verified editors, portfolios,
@@ -477,9 +545,13 @@
 
           <div class="step">
 
-            <div class="step-number">04</div>
+            <div class="step-number">
+              04
+            </div>
 
-            <h3>Get Your Video</h3>
+            <h3>
+              Get Your Video
+            </h3>
 
             <p>
               Work with your editor and receive
@@ -503,7 +575,9 @@
 
         <div class="section-title">
 
-          <h2>Not Sure What It Should Cost?</h2>
+          <h2>
+            Not Sure What It Should Cost?
+          </h2>
 
           <p>
             Tell us about your project and get an estimated price.
@@ -514,14 +588,19 @@
 
         <div class="price-box">
 
-          <h3>Know Your Budget Before You Hire.</h3>
+          <h3>
+            Know Your Budget Before You Hire.
+          </h3>
 
           <p>
             Our pricing system considers video length,
             editing complexity, deadline and services required.
           </p>
 
-          <a href="#" class="primary-btn">
+          <a
+            href="create-project.html"
+            class="primary-btn"
+          >
             Estimate My Project →
           </a>
 
@@ -534,13 +613,18 @@
 
     <!-- EDITORS -->
 
-    <section id="editors" class="editor-section">
+    <section
+      id="editors"
+      class="editor-section"
+    >
 
       <div class="container">
 
         <div class="section-title">
 
-          <h2>Work With Verified Editors</h2>
+          <h2>
+            Work With Verified Editors
+          </h2>
 
           <p>
             Skilled creators ready to bring your ideas to life.
@@ -553,9 +637,13 @@
 
           <div class="feature">
 
-            <div class="feature-icon">✓</div>
+            <div class="feature-icon">
+              ✓
+            </div>
 
-            <h3>Identity Verified</h3>
+            <h3>
+              Identity Verified
+            </h3>
 
             <p>
               Verified users and professional profiles.
@@ -566,9 +654,13 @@
 
           <div class="feature">
 
-            <div class="feature-icon">★</div>
+            <div class="feature-icon">
+              ★
+            </div>
 
-            <h3>Skill Verified</h3>
+            <h3>
+              Skill Verified
+            </h3>
 
             <p>
               Editors can be evaluated through portfolio
@@ -580,9 +672,13 @@
 
           <div class="feature">
 
-            <div class="feature-icon">⚡</div>
+            <div class="feature-icon">
+              ⚡
+            </div>
 
-            <h3>Fast Delivery</h3>
+            <h3>
+              Fast Delivery
+            </h3>
 
             <p>
               Find editors according to your deadline.
@@ -593,9 +689,13 @@
 
           <div class="feature">
 
-            <div class="feature-icon">❤</div>
+            <div class="feature-icon">
+              ❤
+            </div>
 
-            <h3>Rated by Clients</h3>
+            <h3>
+              Rated by Clients
+            </h3>
 
             <p>
               Reviews help you choose the right editor.
@@ -618,16 +718,21 @@
 
         <div class="editor-box">
 
-          <h2>Are You a Video Editor?</h2>
+          <h2>
+            Are You a Video Editor?
+          </h2>
 
           <p>
             Get verified, showcase your skills and
             connect with genuine clients.
           </p>
 
-          <a href="editor-application.html" class="primary-btn">
-  Become an EDIT24/7 Editor →
-</a>
+          <a
+            href="editor-application.html"
+            class="primary-btn"
+          >
+            Become an EDIT24/7 Editor →
+          </a>
 
         </div>
 
