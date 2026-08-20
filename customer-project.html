@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Post a Project — EDIT24/7</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0a0a0a;
+      color: white;
+      line-height: 1.6;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    header {
+      border-bottom: 1px solid #222;
+      padding: 22px 0;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .logo span {
+      color: #ff3b30;
+    }
+
+    main {
+      padding: 60px 0;
+    }
+
+    .heading {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .heading h1 {
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    .heading p {
+      color: #888;
+    }
+
+    .form-box {
+      background: #111;
+      border: 1px solid #252525;
+      border-radius: 16px;
+      padding: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      background: #0a0a0a;
+      color: white;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .checkbox {
+      border: 1px solid #333;
+      padding: 12px;
+      border-radius: 8px;
+      color: #bbb;
+    }
+
+    .checkbox input {
+      width: auto;
+      margin-right: 8px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 9px;
+      background: #ff3b30;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .note {
+      text-align: center;
+      margin-top: 15px;
+      color: #666;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+
+      .heading h1 {
+        font-size: 32px;
+      }
+
+      .form-box {
+        padding: 20px;
+      }
+
+      .checkbox-group {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="container">
+
+      <div class="logo">
+        EDIT<span>24/7</span>
+      </div>
+
+    </div>
+  </header>
+
+
+  <main>
+
+    <div class="container">
+
+      <div class="heading">
+
+        <h1>Tell Us What You Need</h1>
+
+        <p>
+          Give us your project details and we'll help you find
+          the right editor.
+        </p>
+
+      </div>
+
+
+      <div class="form-box">
+
+        <form>
+
+          <div class="form-group">
+
+            <label for="projectType">
+              What type of video do you need?
+            </label>
+
+            <select id="projectType" name="projectType">
+
+              <option value="">
+                Select video type
+              </option>
+
+              <option>YouTube Video</option>
+              <option>Instagram Reel</option>
+              <option>YouTube Short</option>
+              <option>Podcast</option>
+              <option>Gaming Video</option>
+              <option>Wedding Video</option>
+              <option>Advertisement</option>
+              <option>Other</option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="finalLength">
+              Final video length
+            </label>
+
+            <input
+              type="text"
+              id="finalLength"
+              name="finalLength"
+              placeholder="Example: 10 minutes"
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="rawFootage">
+              Raw footage length
+            </label>
+
+            <input
+              type="text"
+              id="rawFootage"
+              name="rawFootage"
+              placeholder="Example: 30 minutes"
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              What editing do you need?
+            </label>
+
+            <div class="checkbox-group">
+
+              <label class="checkbox">
+                <input type="checkbox">
+                Cutting
+              </label>
+
+              <label class="checkbox">
+                <input type="checkbox">
+                Captions
+              </label>
+
+              <label class="checkbox">
+                <input type="checkbox">
+                B-roll
+              </label>
+
+              <label class="checkbox">
+                <input type="checkbox">
+                Motion Graphics
+              </label>
+
+              <label class="checkbox">
+                <input type="checkbox">
+                Color Correction
+              </label>
+
+              <label class="checkbox">
+                <input type="checkbox">
+                Sound Editing
+              </label>
+
+              <label class="checkbox">
+                <input type="checkbox">
+                Background Music
+              </label>
+
+              <label class="checkbox">
+                <input type="checkbox">
+                Effects
+              </label>
+
+            </div>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="deadline">
+              When do you need it?
+            </label>
+
+            <select id="deadline" name="deadline">
+
+              <option value="">
+                Select deadline
+              </option>
+
+              <option>Within 24 hours</option>
+              <option>2 days</option>
+              <option>3 days</option>
+              <option>5 days</option>
+              <option>7 days</option>
+              <option>More than 7 days</option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="revisions">
+              Number of revisions
+            </label>
+
+            <select id="revisions" name="revisions">
+
+              <option>1 Revision</option>
+              <option>2 Revisions</option>
+              <option>3 Revisions</option>
+              <option>More than 3</option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="budget">
+              Your budget (optional)
+            </label>
+
+            <input
+              type="number"
+              id="budget"
+              name="budget"
+              placeholder="₹ Example: 2500"
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="description">
+              Tell us more about your project
+            </label>
+
+            <textarea
+              id="description"
+              name="description"
+              placeholder="Describe the editing style, references, requirements, etc."
+            ></textarea>
+
+          </div>
+
+
+          <button type="submit" class="submit-btn">
+            Get My Price Estimate →
+          </button>
+
+          <div class="note">
+            Your project details will be used to find suitable editors.
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</body>
+</html>
