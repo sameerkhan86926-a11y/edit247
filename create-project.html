@@ -130,10 +130,6 @@
       line-height: 1.5;
     }
 
-    select {
-      appearance: auto;
-    }
-
     .hint {
       color: #666;
       font-size: 11px;
@@ -164,6 +160,7 @@
       color: #aaa;
       font-size: 12px;
       text-align: center;
+      transition: 0.2s;
     }
 
     .option:hover {
@@ -181,6 +178,61 @@
       display: block;
       font-size: 22px;
       margin-bottom: 7px;
+    }
+
+    /* EDITING LEVEL */
+
+    .levels {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .level {
+      border: 1px solid #292929;
+      border-radius: 10px;
+      padding: 16px;
+      background: #0b0b0b;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .level:hover {
+      border-color: #555;
+    }
+
+    .level.active {
+      border-color: #ff3b30;
+      background: #181010;
+    }
+
+    .level input {
+      display: none;
+    }
+
+    .level-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 7px;
+    }
+
+    .level-name {
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .level-price {
+      color: #ff3b30;
+      font-size: 12px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .level-description {
+      color: #777;
+      font-size: 11px;
+      line-height: 1.5;
     }
 
     /* CHECKBOXES */
@@ -201,10 +253,22 @@
       background: #0b0b0b;
       color: #aaa;
       font-size: 12px;
+      cursor: pointer;
+    }
+
+    .check:hover {
+      border-color: #444;
+      color: white;
     }
 
     .check input {
       width: auto;
+    }
+
+    .extra-price {
+      margin-left: auto;
+      color: #777;
+      font-size: 11px;
     }
 
     /* UPLOAD */
@@ -234,6 +298,7 @@
       padding: 9px 14px;
       border-radius: 7px;
       font-size: 12px;
+      cursor: pointer;
     }
 
     /* BUDGET */
@@ -251,6 +316,58 @@
 
     .budget-info strong {
       color: white;
+    }
+
+    /* PRICE ESTIMATE */
+
+    .estimate {
+      background: linear-gradient(135deg, #151010, #111);
+      border: 1px solid #3a2422;
+      border-radius: 14px;
+      padding: 25px;
+      margin-top: 20px;
+    }
+
+    .estimate-label {
+      color: #999;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .estimate-price {
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
+
+    .estimate-price span {
+      color: #ff3b30;
+    }
+
+    .estimate-note {
+      color: #777;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .estimate-breakdown {
+      border-top: 1px solid #292929;
+      margin-top: 18px;
+      padding-top: 15px;
+    }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      color: #888;
+      font-size: 12px;
+      margin-bottom: 9px;
+    }
+
+    .breakdown-row strong {
+      color: #ddd;
     }
 
     /* SUBMIT */
@@ -302,6 +419,10 @@
         grid-template-columns: 1fr 1fr;
       }
 
+      .levels {
+        grid-template-columns: 1fr;
+      }
+
       .checks {
         grid-template-columns: 1fr;
       }
@@ -309,12 +430,15 @@
       .card {
         padding: 20px;
       }
+
+      .estimate-price {
+        font-size: 31px;
+      }
     }
   </style>
 </head>
 
 <body>
-
 
   <!-- HEADER -->
 
@@ -349,8 +473,8 @@
 
         <p>
           Tell us what you need. EDIT24/7 will understand
-          your requirements and connect you with a suitable
-          verified editor.
+          your requirements, estimate a fair price and connect
+          you with suitable verified editors.
         </p>
 
       </div>
@@ -372,8 +496,10 @@
           </label>
 
           <input
+            id="projectTitle"
             type="text"
             placeholder="Example: YouTube Travel Video Editing"
+            required
           >
 
         </div>
@@ -388,69 +514,34 @@
 
           <div class="options">
 
-            <div class="option active">
-
-              <span class="option-icon">
-                ▶️
-              </span>
-
+            <div class="option active" data-type="youtube">
+              <span class="option-icon">▶️</span>
               YouTube Video
-
             </div>
 
-
-            <div class="option">
-
-              <span class="option-icon">
-                📱
-              </span>
-
+            <div class="option" data-type="reels">
+              <span class="option-icon">📱</span>
               Instagram / Reels
-
             </div>
 
-
-            <div class="option">
-
-              <span class="option-icon">
-                🎬
-              </span>
-
+            <div class="option" data-type="shortfilm">
+              <span class="option-icon">🎬</span>
               Short Film
-
             </div>
 
-
-            <div class="option">
-
-              <span class="option-icon">
-                📢
-              </span>
-
+            <div class="option" data-type="advertisement">
+              <span class="option-icon">📢</span>
               Advertisement
-
             </div>
 
-
-            <div class="option">
-
-              <span class="option-icon">
-                🎓
-              </span>
-
+            <div class="option" data-type="course">
+              <span class="option-icon">🎓</span>
               Course / Educational
-
             </div>
 
-
-            <div class="option">
-
-              <span class="option-icon">
-                ✨
-              </span>
-
+            <div class="option" data-type="other">
+              <span class="option-icon">✨</span>
               Other
-
             </div>
 
           </div>
@@ -465,7 +556,9 @@
           </label>
 
           <textarea
+            id="description"
             placeholder="Explain exactly what you want the editor to do..."
+            required
           ></textarea>
 
           <div class="hint">
@@ -489,36 +582,39 @@
 
         <div class="row">
 
-
           <div class="field">
 
             <label>
               Raw Footage Duration
             </label>
 
-            <select>
+            <select id="rawFootage">
 
-              <option>
+              <option value="1">
                 Less than 10 minutes
               </option>
 
-              <option>
+              <option value="1.1">
                 10–30 minutes
               </option>
 
-              <option>
+              <option value="1.2">
                 30–60 minutes
               </option>
 
-              <option>
+              <option value="1.3">
                 1–2 hours
               </option>
 
-              <option>
+              <option value="1.5">
                 More than 2 hours
               </option>
 
             </select>
+
+            <div class="hint">
+              More raw footage generally requires more editing time.
+            </div>
 
           </div>
 
@@ -529,32 +625,20 @@
               Final Video Duration
             </label>
 
-            <select>
+            <input
+              id="finalDuration"
+              type="number"
+              min="1"
+              max="120"
+              value="5"
+              placeholder="Example: 8"
+            >
 
-              <option>
-                Under 1 minute
-              </option>
-
-              <option>
-                1–5 minutes
-              </option>
-
-              <option>
-                5–10 minutes
-              </option>
-
-              <option>
-                10–20 minutes
-              </option>
-
-              <option>
-                20+ minutes
-              </option>
-
-            </select>
+            <div class="hint">
+              Enter the approximate final video length in minutes.
+            </div>
 
           </div>
-
 
         </div>
 
@@ -568,26 +652,22 @@
               Deadline
             </label>
 
-            <select>
+            <select id="deadline">
 
-              <option>
-                1–2 Days
+              <option value="1">
+                5–7 Days — Normal
               </option>
 
-              <option>
-                3–5 Days
+              <option value="1">
+                1–2 Weeks — Flexible
               </option>
 
-              <option>
-                5–7 Days
+              <option value="1.2">
+                3–4 Days — Urgent
               </option>
 
-              <option>
-                1–2 Weeks
-              </option>
-
-              <option>
-                Flexible
+              <option value="1.4">
+                1–2 Days — Rush
               </option>
 
             </select>
@@ -603,25 +683,144 @@
 
             <select>
 
-              <option>
-                1080p
-              </option>
-
-              <option>
-                4K
-              </option>
-
-              <option>
-                Vertical 9:16
-              </option>
-
-              <option>
-                Square 1:1
-              </option>
+              <option>1080p</option>
+              <option>4K</option>
+              <option>Vertical 9:16</option>
+              <option>Square 1:1</option>
 
             </select>
 
           </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- EDITING LEVEL -->
+
+      <div class="card">
+
+        <h2>
+          3. Editing Level
+        </h2>
+
+        <div class="hint" style="margin-bottom:18px;">
+          Choose the editing quality and complexity you need.
+        </div>
+
+
+        <div class="levels">
+
+
+          <label class="level active">
+
+            <input
+              type="radio"
+              name="editingLevel"
+              value="300"
+              checked
+            >
+
+            <div class="level-top">
+
+              <div class="level-name">
+                Basic
+              </div>
+
+              <div class="level-price">
+                ₹200–₹400/min
+              </div>
+
+            </div>
+
+            <div class="level-description">
+              Cutting, trimming, simple transitions and basic music.
+            </div>
+
+          </label>
+
+
+          <label class="level">
+
+            <input
+              type="radio"
+              name="editingLevel"
+              value="500"
+            >
+
+            <div class="level-top">
+
+              <div class="level-name">
+                Standard
+              </div>
+
+              <div class="level-price">
+                ₹400–₹600/min
+              </div>
+
+            </div>
+
+            <div class="level-description">
+              Clean pacing, captions, transitions, music and basic color correction.
+            </div>
+
+          </label>
+
+
+          <label class="level">
+
+            <input
+              type="radio"
+              name="editingLevel"
+              value="700"
+            >
+
+            <div class="level-top">
+
+              <div class="level-name">
+                Advanced
+              </div>
+
+              <div class="level-price">
+                ₹600–₹800/min
+              </div>
+
+            </div>
+
+            <div class="level-description">
+              Motion graphics, advanced effects, color grading and sound design.
+            </div>
+
+          </label>
+
+
+          <label class="level">
+
+            <input
+              type="radio"
+              name="editingLevel"
+              value="900"
+            >
+
+            <div class="level-top">
+
+              <div class="level-name">
+                Premium
+              </div>
+
+              <div class="level-price">
+                ₹800–₹1,000/min
+              </div>
+
+            </div>
+
+            <div class="level-description">
+              High-end editing, complex graphics, detailed sound and visual treatment.
+            </div>
+
+          </label>
+
 
         </div>
 
@@ -633,7 +832,7 @@
       <div class="card">
 
         <h2>
-          3. Editing Requirements
+          4. Extra Editing Requirements
         </h2>
 
 
@@ -641,92 +840,90 @@
 
 
           <label class="check">
-
-            <input type="checkbox">
-
-            Basic Cuts
-
+            <input
+              type="checkbox"
+              class="extra"
+              data-price="150"
+            >
+            Captions / Subtitles
+            <span class="extra-price">+₹150</span>
           </label>
 
 
           <label class="check">
-
-            <input type="checkbox">
-
+            <input
+              type="checkbox"
+              class="extra"
+              data-price="200"
+            >
             Color Correction
-
+            <span class="extra-price">+₹200</span>
           </label>
 
 
           <label class="check">
-
-            <input type="checkbox">
-
+            <input
+              type="checkbox"
+              class="extra"
+              data-price="300"
+            >
             Color Grading
-
+            <span class="extra-price">+₹300</span>
           </label>
 
 
           <label class="check">
-
-            <input type="checkbox">
-
-            Subtitles / Captions
-
-          </label>
-
-
-          <label class="check">
-
-            <input type="checkbox">
-
-            Background Music
-
-          </label>
-
-
-          <label class="check">
-
-            <input type="checkbox">
-
+            <input
+              type="checkbox"
+              class="extra"
+              data-price="300"
+            >
             Sound Design
-
+            <span class="extra-price">+₹300</span>
           </label>
 
 
           <label class="check">
-
-            <input type="checkbox">
-
+            <input
+              type="checkbox"
+              class="extra"
+              data-price="400"
+            >
             Motion Graphics
-
+            <span class="extra-price">+₹400</span>
           </label>
 
 
           <label class="check">
-
-            <input type="checkbox">
-
+            <input
+              type="checkbox"
+              class="extra"
+              data-price="250"
+            >
             Cinematic Transitions
-
+            <span class="extra-price">+₹250</span>
           </label>
 
 
           <label class="check">
+            <input
+              type="checkbox"
+              class="extra"
+              data-price="250"
+            >
+            Background Removal
+            <span class="extra-price">+₹250</span>
+          </label>
 
-            <input type="checkbox">
 
+          <label class="check">
+            <input
+              type="checkbox"
+              class="extra"
+              data-price="300"
+            >
             Thumbnail
-
-          </label>
-
-
-          <label class="check">
-
-            <input type="checkbox">
-
-            Other
-
+            <span class="extra-price">+₹300</span>
           </label>
 
 
@@ -740,7 +937,7 @@
       <div class="card">
 
         <h2>
-          4. Reference & Files
+          5. Reference & Files
         </h2>
 
 
@@ -751,9 +948,11 @@
           </label>
 
           <input
+            id="reference"
             type="url"
-            placeholder="https://youtube.com/...">
-          
+            placeholder="https://youtube.com/..."
+          >
+
           <div class="hint">
             Share an example of the editing style you want.
           </div>
@@ -784,6 +983,7 @@
 
               <input
                 type="file"
+                id="files"
                 multiple
                 hidden
               >
@@ -791,8 +991,8 @@
             </label>
 
             <div class="hint">
-              File upload will be connected to cloud storage
-              in the backend.
+              File upload will be connected to secure cloud storage
+              when the backend is connected.
             </div>
 
           </div>
@@ -807,7 +1007,7 @@
       <div class="card">
 
         <h2>
-          5. Budget
+          6. Your Budget
         </h2>
 
 
@@ -817,8 +1017,8 @@
             Don't know the right price?
           </strong>
 
-          That's okay. EDIT24/7 will review your requirements
-          and suggest an appropriate market-based price.
+          That's okay. EDIT24/7 will calculate a
+          market-based estimate from your requirements.
 
         </div>
 
@@ -833,6 +1033,7 @@
             </label>
 
             <input
+              id="minBudget"
               type="number"
               placeholder="₹"
             >
@@ -847,12 +1048,56 @@
             </label>
 
             <input
+              id="maxBudget"
               type="number"
               placeholder="₹"
             >
 
           </div>
 
+
+        </div>
+
+
+        <!-- LIVE ESTIMATE -->
+
+        <div class="estimate">
+
+          <div class="estimate-label">
+            EDIT24/7 Estimated Project Cost
+          </div>
+
+          <div class="estimate-price">
+            <span id="priceMin">₹1,000</span>
+            –
+            <span id="priceMax">₹1,500</span>
+          </div>
+
+          <div class="estimate-note">
+            This is an estimated market-based range.
+            The final price may change after project review
+            and editor proposals.
+          </div>
+
+
+          <div class="estimate-breakdown">
+
+            <div class="breakdown-row">
+              <span>Base editing</span>
+              <strong id="baseAmount">₹1,500</strong>
+            </div>
+
+            <div class="breakdown-row">
+              <span>Extra services</span>
+              <strong id="extraAmount">₹0</strong>
+            </div>
+
+            <div class="breakdown-row">
+              <span>Raw footage / deadline adjustment</span>
+              <strong id="adjustmentAmount">₹0</strong>
+            </div>
+
+          </div>
 
         </div>
 
@@ -863,7 +1108,11 @@
 
       <div class="submit-area">
 
-        <button class="submit-btn">
+        <button
+          class="submit-btn"
+          id="submitProject"
+          type="button"
+        >
           Submit Project to EDIT24/7 →
         </button>
 
@@ -877,6 +1126,321 @@
     </div>
 
   </main>
+
+
+  <script>
+
+    /* VIDEO TYPE */
+
+    const options = document.querySelectorAll(".option");
+
+    options.forEach(option => {
+
+      option.addEventListener("click", () => {
+
+        options.forEach(item => {
+          item.classList.remove("active");
+        });
+
+        option.classList.add("active");
+
+        calculatePrice();
+
+      });
+
+    });
+
+
+    /* EDITING LEVEL */
+
+    const levels = document.querySelectorAll(".level");
+
+    levels.forEach(level => {
+
+      level.addEventListener("click", () => {
+
+        levels.forEach(item => {
+          item.classList.remove("active");
+        });
+
+        level.classList.add("active");
+
+        const radio = level.querySelector("input");
+        radio.checked = true;
+
+        calculatePrice();
+
+      });
+
+    });
+
+
+    /* INPUTS */
+
+    const finalDuration =
+      document.getElementById("finalDuration");
+
+    const rawFootage =
+      document.getElementById("rawFootage");
+
+    const deadline =
+      document.getElementById("deadline");
+
+    const extras =
+      document.querySelectorAll(".extra");
+
+
+    finalDuration.addEventListener(
+      "input",
+      calculatePrice
+    );
+
+    rawFootage.addEventListener(
+      "change",
+      calculatePrice
+    );
+
+    deadline.addEventListener(
+      "change",
+      calculatePrice
+    );
+
+
+    extras.forEach(extra => {
+
+      extra.addEventListener(
+        "change",
+        calculatePrice
+      );
+
+    });
+
+
+    /* PRICE CALCULATOR */
+
+    function calculatePrice() {
+
+      let duration =
+        parseFloat(finalDuration.value) || 1;
+
+      let baseRate =
+        parseFloat(
+          document.querySelector(
+            'input[name="editingLevel"]:checked'
+          ).value
+        );
+
+      let rawMultiplier =
+        parseFloat(rawFootage.value);
+
+      let deadlineMultiplier =
+        parseFloat(deadline.value);
+
+
+      /*
+        Base price:
+        ₹200–₹1000 per finished minute.
+
+        The selected editing level uses a
+        midpoint rate for calculation.
+      */
+
+      let basePrice =
+        duration *
+        baseRate;
+
+
+      /*
+        Raw footage adjustment
+      */
+
+      let adjustedBase =
+        basePrice *
+        rawMultiplier;
+
+
+      /*
+        Extra services
+      */
+
+      let extraTotal = 0;
+
+      extras.forEach(extra => {
+
+        if (extra.checked) {
+
+          extraTotal +=
+            parseFloat(extra.dataset.price);
+
+        }
+
+      });
+
+
+      /*
+        Deadline adjustment
+      */
+
+      let subtotal =
+        adjustedBase +
+        extraTotal;
+
+
+      let deadlineAdjusted =
+        subtotal *
+        deadlineMultiplier;
+
+
+      /*
+        Price range:
+        approximately ±10%
+      */
+
+      let minimum =
+        Math.round(
+          deadlineAdjusted * 0.9 / 50
+        ) * 50;
+
+
+      let maximum =
+        Math.round(
+          deadlineAdjusted * 1.1 / 50
+        ) * 50;
+
+
+      /*
+        Minimum platform estimate
+      */
+
+      minimum =
+        Math.max(500, minimum);
+
+      maximum =
+        Math.max(minimum + 250, maximum);
+
+
+      /*
+        Update UI
+      */
+
+      document.getElementById(
+        "priceMin"
+      ).textContent =
+        "₹" + minimum.toLocaleString("en-IN");
+
+
+      document.getElementById(
+        "priceMax"
+      ).textContent =
+        "₹" + maximum.toLocaleString("en-IN");
+
+
+      document.getElementById(
+        "baseAmount"
+      ).textContent =
+        "₹" +
+        Math.round(adjustedBase)
+          .toLocaleString("en-IN");
+
+
+      document.getElementById(
+        "extraAmount"
+      ).textContent =
+        "₹" +
+        extraTotal.toLocaleString("en-IN");
+
+
+      let adjustment =
+        deadlineAdjusted -
+        subtotal;
+
+
+      document.getElementById(
+        "adjustmentAmount"
+      ).textContent =
+        "₹" +
+        Math.max(
+          0,
+          Math.round(adjustment)
+        ).toLocaleString("en-IN");
+
+    }
+
+
+    /* SUBMIT */
+
+    document
+      .getElementById("submitProject")
+      .addEventListener("click", () => {
+
+        const title =
+          document.getElementById("projectTitle").value.trim();
+
+        const description =
+          document.getElementById("description").value.trim();
+
+        const duration =
+          document.getElementById("finalDuration").value;
+
+
+        if (!title) {
+
+          alert(
+            "Please enter your project title."
+          );
+
+          document
+            .getElementById("projectTitle")
+            .focus();
+
+          return;
+
+        }
+
+
+        if (!description) {
+
+          alert(
+            "Please describe your project requirements."
+          );
+
+          document
+            .getElementById("description")
+            .focus();
+
+          return;
+
+        }
+
+
+        if (!duration || duration <= 0) {
+
+          alert(
+            "Please enter the final video duration."
+          );
+
+          document
+            .getElementById("finalDuration")
+            .focus();
+
+          return;
+
+        }
+
+
+        alert(
+          "Your project has been prepared successfully. " +
+          "The EDIT24/7 editor matching system will be connected in the backend."
+        );
+
+      });
+
+
+    /* INITIAL CALCULATION */
+
+    calculatePrice();
+
+  </script>
 
 </body>
 </html>
