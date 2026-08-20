@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Create Account — EDIT24/7</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    header {
+      padding: 25px 0;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .logo span {
+      color: #ff3b30;
+    }
+
+    main {
+      padding: 40px 0 70px;
+    }
+
+    .signup-box {
+      background: #111;
+      border: 1px solid #252525;
+      border-radius: 16px;
+      padding: 32px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+
+    .role-title {
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .roles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .role-card {
+      position: relative;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 18px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .role-card:hover {
+      border-color: #ff3b30;
+    }
+
+    .role-card input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .role-card:has(input:checked) {
+      border-color: #ff3b30;
+      background: #19100f;
+    }
+
+    .role-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .role-name {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .role-description {
+      color: #777;
+      font-size: 12px;
+    }
+
+    .form-group {
+      margin-bottom: 19px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .required {
+      color: #ff3b30;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"] {
+      width: 100%;
+      padding: 13px;
+      background: #090909;
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: white;
+      font-size: 15px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #ff3b30;
+    }
+
+    .password-note {
+      color: #666;
+      font-size: 11px;
+      margin-top: 6px;
+    }
+
+    .terms {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      color: #888;
+      font-size: 12px;
+      margin: 22px 0;
+    }
+
+    .terms input {
+      margin-top: 3px;
+    }
+
+    .terms a {
+      color: #ff3b30;
+      text-decoration: none;
+    }
+
+    .signup-btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 9px;
+      background: #ff3b30;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 25px 0;
+      color: #555;
+      font-size: 13px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      height: 1px;
+      background: #292929;
+      flex: 1;
+    }
+
+    .login {
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+    }
+
+    .login a {
+      color: #ff3b30;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .note {
+      text-align: center;
+      color: #555;
+      font-size: 12px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 550px) {
+      .signup-box {
+        padding: 22px;
+      }
+
+      .roles,
+      .row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+      EDIT<span>24/7</span>
+    </div>
+  </header>
+
+
+  <main>
+
+    <div class="container">
+
+      <div class="signup-box">
+
+        <h1>Create Your Account</h1>
+
+        <p class="subtitle">
+          Join the EDIT24/7 marketplace.
+        </p>
+
+
+        <!-- ROLE -->
+
+        <div class="role-title">
+          I want to:
+        </div>
+
+        <div class="roles">
+
+          <label class="role-card">
+
+            <input
+              type="radio"
+              name="role"
+              value="customer"
+              checked
+            >
+
+            <div class="role-icon">
+              🎬
+            </div>
+
+            <div class="role-name">
+              Hire an Editor
+            </div>
+
+            <div class="role-description">
+              I need someone to edit my videos.
+            </div>
+
+          </label>
+
+
+          <label class="role-card">
+
+            <input
+              type="radio"
+              name="role"
+              value="editor"
+            >
+
+            <div class="role-icon">
+              💻
+            </div>
+
+            <div class="role-name">
+              Work as an Editor
+            </div>
+
+            <div class="role-description">
+              I want to edit videos for clients.
+            </div>
+
+          </label>
+
+        </div>
+
+
+        <form>
+
+
+          <!-- NAME -->
+
+          <div class="row">
+
+            <div class="form-group">
+
+              <label for="firstName">
+                First Name <span class="required">*</span>
+              </label>
+
+              <input
+                type="text"
+                id="firstName"
+                placeholder="First name"
+                required
+              >
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="lastName">
+                Last Name <span class="required">*</span>
+              </label>
+
+              <input
+                type="text"
+                id="lastName"
+                placeholder="Last name"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          <!-- EMAIL -->
+
+          <div class="form-group">
+
+            <label for="email">
+              Email <span class="required">*</span>
+            </label>
+
+            <input
+              type="email"
+              id="email"
+              placeholder="you@example.com"
+              required
+            >
+
+          </div>
+
+
+          <!-- PHONE -->
+
+          <div class="form-group">
+
+            <label for="phone">
+              Phone Number <span class="required">*</span>
+            </label>
+
+            <input
+              type="tel"
+              id="phone"
+              placeholder="+91 XXXXX XXXXX"
+              required
+            >
+
+          </div>
+
+
+          <!-- PASSWORD -->
+
+          <div class="form-group">
+
+            <label for="password">
+              Password <span class="required">*</span>
+            </label>
+
+            <input
+              type="password"
+              id="password"
+              placeholder="Create a password"
+              required
+            >
+
+            <div class="password-note">
+              Use at least 8 characters.
+            </div>
+
+          </div>
+
+
+          <!-- CONFIRM PASSWORD -->
+
+          <div class="form-group">
+
+            <label for="confirmPassword">
+              Confirm Password <span class="required">*</span>
+            </label>
+
+            <input
+              type="password"
+              id="confirmPassword"
+              placeholder="Enter password again"
+              required
+            >
+
+          </div>
+
+
+          <!-- TERMS -->
+
+          <label class="terms">
+
+            <input
+              type="checkbox"
+              required
+            >
+
+            <span>
+              I agree to the EDIT24/7
+              <a href="#">Terms of Service</a>
+              and
+              <a href="#">Privacy Policy</a>.
+            </span>
+
+          </label>
+
+
+          <!-- SUBMIT -->
+
+          <button
+            type="submit"
+            class="signup-btn"
+          >
+            Create Account →
+          </button>
+
+        </form>
+
+
+        <div class="divider">
+          OR
+        </div>
+
+
+        <div class="login">
+
+          Already have an account?
+
+          <a href="login.html">
+            Login
+          </a>
+
+        </div>
+
+
+        <div class="note">
+          Your account will be created securely once
+          the authentication system is connected.
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</body>
+</html>
