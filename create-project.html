@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Create Project — EDIT24/7</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .topbar {
+      height: 70px;
+      border-bottom: 1px solid #222;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .logo span {
+      color: #ff3b30;
+    }
+
+    .back {
+      color: #888;
+      font-size: 13px;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 850px;
+      margin: auto;
+    }
+
+    main {
+      padding: 40px 0 70px;
+    }
+
+    .heading {
+      margin-bottom: 30px;
+    }
+
+    .heading h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .heading p {
+      color: #888;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .card {
+      background: #111;
+      border: 1px solid #242424;
+      border-radius: 14px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    .field:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .required {
+      color: #ff3b30;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      background: #0b0b0b;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 13px;
+      color: white;
+      font-family: inherit;
+      font-size: 13px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #555;
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    select {
+      appearance: auto;
+    }
+
+    .hint {
+      color: #666;
+      font-size: 11px;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    /* VIDEO TYPE */
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .option {
+      border: 1px solid #292929;
+      border-radius: 8px;
+      padding: 14px;
+      background: #0b0b0b;
+      cursor: pointer;
+      color: #aaa;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .option:hover {
+      border-color: #555;
+      color: white;
+    }
+
+    .option.active {
+      border-color: #ff3b30;
+      background: #181010;
+      color: white;
+    }
+
+    .option-icon {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 7px;
+    }
+
+    /* CHECKBOXES */
+
+    .checks {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .check {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      border: 1px solid #252525;
+      border-radius: 8px;
+      padding: 12px;
+      background: #0b0b0b;
+      color: #aaa;
+      font-size: 12px;
+    }
+
+    .check input {
+      width: auto;
+    }
+
+    /* UPLOAD */
+
+    .upload {
+      border: 1px dashed #3a3a3a;
+      border-radius: 10px;
+      padding: 30px 20px;
+      text-align: center;
+      background: #0b0b0b;
+    }
+
+    .upload-icon {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .upload p {
+      color: #777;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    .upload-btn {
+      display: inline-block;
+      border: 1px solid #333;
+      padding: 9px 14px;
+      border-radius: 7px;
+      font-size: 12px;
+    }
+
+    /* BUDGET */
+
+    .budget-info {
+      background: #15120d;
+      border: 1px solid #3a2d17;
+      border-radius: 9px;
+      padding: 15px;
+      margin-bottom: 18px;
+      color: #999;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .budget-info strong {
+      color: white;
+    }
+
+    /* SUBMIT */
+
+    .submit-area {
+      margin-top: 25px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      border: none;
+      background: #ff3b30;
+      color: white;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      opacity: 0.9;
+    }
+
+    .secure {
+      text-align: center;
+      color: #666;
+      font-size: 11px;
+      margin-top: 12px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 650px) {
+
+      .topbar {
+        padding: 0 20px;
+      }
+
+      .heading h1 {
+        font-size: 25px;
+      }
+
+      .row {
+        grid-template-columns: 1fr;
+      }
+
+      .options {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .checks {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <!-- HEADER -->
+
+  <header class="topbar">
+
+    <div class="logo">
+      EDIT<span>24/7</span>
+    </div>
+
+    <a
+      href="customer-dashboard.html"
+      class="back"
+    >
+      ← Back to Dashboard
+    </a>
+
+  </header>
+
+
+  <main>
+
+    <div class="container">
+
+
+      <!-- HEADING -->
+
+      <div class="heading">
+
+        <h1>
+          Create Your Project
+        </h1>
+
+        <p>
+          Tell us what you need. EDIT24/7 will understand
+          your requirements and connect you with a suitable
+          verified editor.
+        </p>
+
+      </div>
+
+
+      <!-- BASIC INFORMATION -->
+
+      <div class="card">
+
+        <h2>
+          1. Basic Information
+        </h2>
+
+
+        <div class="field">
+
+          <label>
+            Project Title <span class="required">*</span>
+          </label>
+
+          <input
+            type="text"
+            placeholder="Example: YouTube Travel Video Editing"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            What type of video do you need?
+          </label>
+
+
+          <div class="options">
+
+            <div class="option active">
+
+              <span class="option-icon">
+                ▶️
+              </span>
+
+              YouTube Video
+
+            </div>
+
+
+            <div class="option">
+
+              <span class="option-icon">
+                📱
+              </span>
+
+              Instagram / Reels
+
+            </div>
+
+
+            <div class="option">
+
+              <span class="option-icon">
+                🎬
+              </span>
+
+              Short Film
+
+            </div>
+
+
+            <div class="option">
+
+              <span class="option-icon">
+                📢
+              </span>
+
+              Advertisement
+
+            </div>
+
+
+            <div class="option">
+
+              <span class="option-icon">
+                🎓
+              </span>
+
+              Course / Educational
+
+            </div>
+
+
+            <div class="option">
+
+              <span class="option-icon">
+                ✨
+              </span>
+
+              Other
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Project Description <span class="required">*</span>
+          </label>
+
+          <textarea
+            placeholder="Explain exactly what you want the editor to do..."
+          ></textarea>
+
+          <div class="hint">
+            The more details you provide, the better we can
+            match you with an editor.
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- VIDEO DETAILS -->
+
+      <div class="card">
+
+        <h2>
+          2. Video Details
+        </h2>
+
+
+        <div class="row">
+
+
+          <div class="field">
+
+            <label>
+              Raw Footage Duration
+            </label>
+
+            <select>
+
+              <option>
+                Less than 10 minutes
+              </option>
+
+              <option>
+                10–30 minutes
+              </option>
+
+              <option>
+                30–60 minutes
+              </option>
+
+              <option>
+                1–2 hours
+              </option>
+
+              <option>
+                More than 2 hours
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Final Video Duration
+            </label>
+
+            <select>
+
+              <option>
+                Under 1 minute
+              </option>
+
+              <option>
+                1–5 minutes
+              </option>
+
+              <option>
+                5–10 minutes
+              </option>
+
+              <option>
+                10–20 minutes
+              </option>
+
+              <option>
+                20+ minutes
+              </option>
+
+            </select>
+
+          </div>
+
+
+        </div>
+
+
+        <div class="row">
+
+
+          <div class="field">
+
+            <label>
+              Deadline
+            </label>
+
+            <select>
+
+              <option>
+                1–2 Days
+              </option>
+
+              <option>
+                3–5 Days
+              </option>
+
+              <option>
+                5–7 Days
+              </option>
+
+              <option>
+                1–2 Weeks
+              </option>
+
+              <option>
+                Flexible
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Final Video Format
+            </label>
+
+            <select>
+
+              <option>
+                1080p
+              </option>
+
+              <option>
+                4K
+              </option>
+
+              <option>
+                Vertical 9:16
+              </option>
+
+              <option>
+                Square 1:1
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- EDITING REQUIREMENTS -->
+
+      <div class="card">
+
+        <h2>
+          3. Editing Requirements
+        </h2>
+
+
+        <div class="checks">
+
+
+          <label class="check">
+
+            <input type="checkbox">
+
+            Basic Cuts
+
+          </label>
+
+
+          <label class="check">
+
+            <input type="checkbox">
+
+            Color Correction
+
+          </label>
+
+
+          <label class="check">
+
+            <input type="checkbox">
+
+            Color Grading
+
+          </label>
+
+
+          <label class="check">
+
+            <input type="checkbox">
+
+            Subtitles / Captions
+
+          </label>
+
+
+          <label class="check">
+
+            <input type="checkbox">
+
+            Background Music
+
+          </label>
+
+
+          <label class="check">
+
+            <input type="checkbox">
+
+            Sound Design
+
+          </label>
+
+
+          <label class="check">
+
+            <input type="checkbox">
+
+            Motion Graphics
+
+          </label>
+
+
+          <label class="check">
+
+            <input type="checkbox">
+
+            Cinematic Transitions
+
+          </label>
+
+
+          <label class="check">
+
+            <input type="checkbox">
+
+            Thumbnail
+
+          </label>
+
+
+          <label class="check">
+
+            <input type="checkbox">
+
+            Other
+
+          </label>
+
+
+        </div>
+
+      </div>
+
+
+      <!-- REFERENCE -->
+
+      <div class="card">
+
+        <h2>
+          4. Reference & Files
+        </h2>
+
+
+        <div class="field">
+
+          <label>
+            Reference Video / Link
+          </label>
+
+          <input
+            type="url"
+            placeholder="https://youtube.com/...">
+          
+          <div class="hint">
+            Share an example of the editing style you want.
+          </div>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Upload Raw Footage
+          </label>
+
+
+          <div class="upload">
+
+            <div class="upload-icon">
+              ☁️
+            </div>
+
+            <p>
+              Upload your video, images, audio or other files
+            </p>
+
+            <label class="upload-btn">
+
+              Choose Files
+
+              <input
+                type="file"
+                multiple
+                hidden
+              >
+
+            </label>
+
+            <div class="hint">
+              File upload will be connected to cloud storage
+              in the backend.
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- BUDGET -->
+
+      <div class="card">
+
+        <h2>
+          5. Budget
+        </h2>
+
+
+        <div class="budget-info">
+
+          <strong>
+            Don't know the right price?
+          </strong>
+
+          That's okay. EDIT24/7 will review your requirements
+          and suggest an appropriate market-based price.
+
+        </div>
+
+
+        <div class="row">
+
+
+          <div class="field">
+
+            <label>
+              Minimum Budget
+            </label>
+
+            <input
+              type="number"
+              placeholder="₹"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Maximum Budget
+            </label>
+
+            <input
+              type="number"
+              placeholder="₹"
+            >
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+
+      <!-- SUBMIT -->
+
+      <div class="submit-area">
+
+        <button class="submit-btn">
+          Submit Project to EDIT24/7 →
+        </button>
+
+        <div class="secure">
+          🔒 Your project details are securely handled by EDIT24/7.
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </main>
+
+</body>
+</html>
