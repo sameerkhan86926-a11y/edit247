@@ -629,221 +629,315 @@
 
 
   <!-- SIGNUP DEMO LOGIC -->
+<script type="module">
 
-  <script>
+  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-    const roleCards =
-      document.querySelectorAll(".role-card");
+  const SUPABASE_URL = "https://elnjavwjxgkiretyxbtt.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_FXhmywNoVuWiwP4PJ1UHUQ_LwNG6QSW";
 
-    const signupForm =
-      document.getElementById("signupForm");
+  const supabase = createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
-    const message =
-      document.getElementById("message");
+
+  /* =========================
+     ELEMENTS
+  ========================= */
+
+  const roleCards = document.querySelectorAll(".role-card");
+  const signupForm = document.getElementById("signupForm");
+  const message = document.getElementById("message");
 
 
-    /*
-      ROLE SELECTION
-    */
+  /* =========================
+     ROLE SELECTION
+  ========================= */
 
-    roleCards.forEach(function(card) {
+  roleCards.forEach(function(card) {
 
-      card.addEventListener("click", function() {
+    card.addEventListener("click", function() {
 
-        roleCards.forEach(function(item) {
-
-          item.classList.remove("active");
-
-        });
-
-        card.classList.add("active");
-
-        const radio =
-          card.querySelector("input");
-
-        radio.checked = true;
-
+      roleCards.forEach(function(item) {
+        item.classList.remove("active");
       });
+
+      card.classList.add("active");
+
+      const radio = card.querySelector("input");
+
+      radio.checked = true;
 
     });
 
-
-    /*
-      SIGNUP
-    */
-
-    signupForm.addEventListener(
-      "submit",
-      function(event) {
-
-        event.preventDefault();
+  });
 
 
-        const firstName =
-          document.getElementById("firstName")
-            .value.trim();
+  /* =========================
+     SIGNUP
+  ========================= */
 
-        const lastName =
-          document.getElementById("lastName")
-            .value.trim();
+  signupForm.addEventListener("submit", async function(event) {
 
-        const email =
-          document.getElementById("email")
-            .value.trim();
-
-        const phone =
-          document.getElementById("phone")
-            .value.trim();
-
-        const password =
-          document.getElementById("password")
-            .value;
-
-        const confirmPassword =
-          document.getElementById("confirmPassword")
-            .value;
-
-        const terms =
-          document.getElementById("terms")
-            .checked;
-
-        const selectedRole =
-          document.querySelector(
-            'input[name="role"]:checked'
-          ).value;
+    event.preventDefault();
 
 
-        /*
-          PASSWORD CHECK
-        */
+    const firstName =
+      document.getElementById("firstName").value.trim();
 
-        if (password.length < 8) {
+    const lastName =
+      document.getElementById("lastName").value.trim();
 
-          showError(
-            "Password must contain at least 8 characters."
-          );
+    const email =
+      document.getElementById("email").value.trim();
 
-          return;
+    const phone =
+      document.getElementById("phone").value.trim();
 
-        }
+    const password =
+      document.getElementById("password").value;
 
+    const confirmPassword =
+      document.getElementById("confirmPassword").value;
 
-        /*
-          CONFIRM PASSWORD
-        */
+    const terms =
+      document.getElementById("terms").checked;
 
-        if (password !== confirmPassword) {
-
-          showError(
-            "Passwords do not match."
-          );
-
-          return;
-
-        }
+    const selectedRole =
+      document.querySelector(
+        'input[name="role"]:checked'
+      ).value;
 
 
-        /*
-          TERMS
-        */
+    /* =========================
+       VALIDATION
+    ========================= */
 
-        if (!terms) {
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !phone ||
+      !password ||
+      !confirmPassword
+    ) {
 
-          showError(
-            "Please accept the Terms of Service and Privacy Policy."
-          );
+      showError("Please fill in all required fields.");
 
-          return;
-
-        }
-
-
-        /*
-          BASIC VALIDATION
-        */
-
-        if (
-          !firstName ||
-          !lastName ||
-          !email ||
-          !phone
-        ) {
-
-          showError(
-            "Please fill in all required fields."
-          );
-
-          return;
-
-        }
+      return;
+    }
 
 
-        /*
-          SUCCESS
-        */
+    if (password.length < 8) {
 
-        message.classList.add("success");
+      showError(
+        "Password must contain at least 8 characters."
+      );
 
-        message.style.display = "block";
-
-        message.textContent =
-          "Account details accepted. Redirecting...";
+      return;
+    }
 
 
-        /*
-          CUSTOMER
-        */
+    if (password !== confirmPassword) {
 
-        if (selectedRole === "customer") {
+      showError("Passwords do not match.");
 
-          setTimeout(function() {
-
-            window.location.href =
-              "customer-dashboard.html";
-
-          }, 800);
-
-          return;
-
-        }
+      return;
+    }
 
 
-        /*
-          EDITOR
-        */
+    if (!terms) {
 
-        if (selectedRole === "editor") {
+      showError(
+        "Please accept the Terms of Service and Privacy Policy."
+      );
 
-          setTimeout(function() {
+      return;
+    }
 
-            window.location.href =
-              "editor-application.html";
 
-          }, 800);
+    /* =========================
+       LOADING
+    ========================= */
 
-          return;
+    const button =
+      signupForm.querySelector(".signup-btn");
 
-        }
+    button.disabled = true;
+
+    button.textContent = "Creating Account...";
+
+
+    message.style.display = "none";
+
+
+    try {
+
+
+      /* =========================
+         CREATE SUPABASE USER
+      ========================= */
+
+      const {
+        data,
+        error
+      } = await supabase.auth.signUp({
+
+        email: email,
+
+        password: password
+
+      });
+
+
+      if (error) {
+
+        throw error;
 
       }
-    );
 
 
-    /*
-      ERROR FUNCTION
-    */
+      if (!data.user) {
 
-    function showError(text) {
+        throw new Error(
+          "Account could not be created."
+        );
 
-      message.classList.remove("success");
+      }
+
+
+      const userId = data.user.id;
+
+
+      /* =========================
+         SAVE PROFILE
+      ========================= */
+
+      const {
+        error: profileError
+      } = await supabase
+        .from("profile")
+        .insert({
+
+          id: userId,
+
+          full_name:
+            firstName + " " + lastName,
+
+          phone: phone,
+
+          role: selectedRole
+
+        });
+
+
+      if (profileError) {
+
+        console.error(profileError);
+
+        /*
+          Auth account already exists,
+          but profile insertion failed.
+        */
+
+        throw new Error(
+          "Account created, but profile information could not be saved."
+        );
+
+      }
+
+
+      /* =========================
+         SUCCESS
+      ========================= */
+
+      message.classList.add("success");
 
       message.style.display = "block";
 
-      message.textContent = text;
+      message.textContent =
+        "Account created successfully!";
+
+
+      /*
+        If email confirmation is enabled,
+        Supabase may require the user
+        to verify email first.
+      */
+
+      if (!data.session) {
+
+        message.textContent =
+          "Account created! Please check your email to verify your account.";
+
+        button.disabled = false;
+
+        button.textContent = "Create Account →";
+
+        return;
+
+      }
+
+
+      /* =========================
+         REDIRECT
+      ========================= */
+
+      setTimeout(function() {
+
+        if (selectedRole === "customer") {
+
+          window.location.href =
+            "customer-dashboard.html";
+
+        } else {
+
+          window.location.href =
+            "editor-application.html";
+
+        }
+
+      }, 800);
+
+
+    } catch (error) {
+
+      console.error(error);
+
+
+      showError(
+        error.message ||
+        "Something went wrong. Please try again."
+      );
+
+
+      button.disabled = false;
+
+      button.textContent =
+        "Create Account →";
 
     }
 
-  </script>
+  });
+
+
+  /* =========================
+     ERROR MESSAGE
+  ========================= */
+
+  function showError(text) {
+
+    message.classList.remove("success");
+
+    message.style.display = "block";
+
+    message.textContent = text;
+
+  }
+
+</script>
+          
 
 </body>
 </html>
