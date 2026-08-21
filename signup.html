@@ -813,39 +813,29 @@
       /* =========================
          SAVE PROFILE
       ========================= */
+const {
+  data,
+  error
+} = await supabase.auth.signUp({
+  email: email,
+  password: password,
+  options: {
+    data: {
+      full_name: firstName + " " + lastName,
+      phone: phone,
+      role: selectedRole
+    }
+  }
+});
 
-      const {
-        error: profileError
-      } = await supabase
-        .from("profile")
-        .insert({
+if (error) {
+  throw error;
+}
 
-          id: userId,
-
-          full_name:
-            firstName + " " + lastName,
-
-          phone: phone,
-
-          role: selectedRole
-
-        });
-
-
-      if (profileError) {
-
-        console.error(profileError);
-
-        /*
-          Auth account already exists,
-          but profile insertion failed.
-        */
-
-        throw new Error(
-          "Account created, but profile information could not be saved."
-        );
-
-      }
+if (!data.user) {
+  throw new Error("Account could not be created.");
+}
+      
 
 
       /* =========================
