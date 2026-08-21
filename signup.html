@@ -633,8 +633,11 @@
 
   import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-  const SUPABASE_URL = "https://elnjavwjxgkiretyxbtt.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_FXhmywNoVuWiwP4PJ1UHUQ_LwNG6QSW";
+  const SUPABASE_URL =
+    "https://elnjavwjxgkiretyxbtt.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable_FXhmywNoVuWiwP4PJ1UHUQ_LwNG6QSW";
 
   const supabase = createClient(
     SUPABASE_URL,
@@ -646,9 +649,14 @@
      ELEMENTS
   ========================= */
 
-  const roleCards = document.querySelectorAll(".role-card");
-  const signupForm = document.getElementById("signupForm");
-  const message = document.getElementById("message");
+  const roleCards =
+    document.querySelectorAll(".role-card");
+
+  const signupForm =
+    document.getElementById("signupForm");
+
+  const message =
+    document.getElementById("message");
 
 
   /* =========================
@@ -665,7 +673,8 @@
 
       card.classList.add("active");
 
-      const radio = card.querySelector("input");
+      const radio =
+        card.querySelector("input");
 
       radio.checked = true;
 
@@ -678,242 +687,268 @@
      SIGNUP
   ========================= */
 
-  signupForm.addEventListener("submit", async function(event) {
+  signupForm.addEventListener(
+    "submit",
+    async function(event) {
 
-    event.preventDefault();
-
-
-    const firstName =
-      document.getElementById("firstName").value.trim();
-
-    const lastName =
-      document.getElementById("lastName").value.trim();
-
-    const email =
-      document.getElementById("email").value.trim();
-
-    const phone =
-      document.getElementById("phone").value.trim();
-
-    const password =
-      document.getElementById("password").value;
-
-    const confirmPassword =
-      document.getElementById("confirmPassword").value;
-
-    const terms =
-      document.getElementById("terms").checked;
-
-    const selectedRole =
-      document.querySelector(
-        'input[name="role"]:checked'
-      ).value;
-
-
-    /* =========================
-       VALIDATION
-    ========================= */
-
-    if (
-      !firstName ||
-      !lastName ||
-      !email ||
-      !phone ||
-      !password ||
-      !confirmPassword
-    ) {
-
-      showError("Please fill in all required fields.");
-
-      return;
-    }
-
-
-    if (password.length < 8) {
-
-      showError(
-        "Password must contain at least 8 characters."
-      );
-
-      return;
-    }
-
-
-    if (password !== confirmPassword) {
-
-      showError("Passwords do not match.");
-
-      return;
-    }
-
-
-    if (!terms) {
-
-      showError(
-        "Please accept the Terms of Service and Privacy Policy."
-      );
-
-      return;
-    }
-
-
-    /* =========================
-       LOADING
-    ========================= */
-
-    const button =
-      signupForm.querySelector(".signup-btn");
-
-    button.disabled = true;
-
-    button.textContent = "Creating Account...";
-
-
-    message.style.display = "none";
-
-
-    try {
+      event.preventDefault();
 
 
       /* =========================
-         CREATE SUPABASE USER
+         GET FORM VALUES
       ========================= */
 
-      const {
-        data,
-        error
-      } = await supabase.auth.signUp({
+      const firstName =
+        document
+          .getElementById("firstName")
+          .value
+          .trim();
 
-        email: email,
+      const lastName =
+        document
+          .getElementById("lastName")
+          .value
+          .trim();
 
-        password: password
+      const email =
+        document
+          .getElementById("email")
+          .value
+          .trim();
 
-      });
+      const phone =
+        document
+          .getElementById("phone")
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById("password")
+          .value;
+
+      const confirmPassword =
+        document
+          .getElementById("confirmPassword")
+          .value;
+
+      const terms =
+        document
+          .getElementById("terms")
+          .checked;
+
+      const selectedRole =
+        document.querySelector(
+          'input[name="role"]:checked'
+        ).value;
 
 
-      if (error) {
+      /* =========================
+         VALIDATION
+      ========================= */
 
-        throw error;
+      if (
+        !firstName ||
+        !lastName ||
+        !email ||
+        !phone ||
+        !password ||
+        !confirmPassword
+      ) {
 
-      }
-
-
-      if (!data.user) {
-
-        throw new Error(
-          "Account could not be created."
+        showError(
+          "Please fill in all required fields."
         );
 
+        return;
       }
 
 
-      const userId = data.user.id;
+      if (password.length < 8) {
 
-
-      /* =========================
-         SAVE PROFILE
-      ========================= */
-const {
-  data,
-  error
-} = await supabase.auth.signUp({
-  email: email,
-  password: password,
-  options: {
-    data: {
-      full_name: firstName + " " + lastName,
-      phone: phone,
-      role: selectedRole
-    }
-  }
-});
-
-if (error) {
-  throw error;
-}
-
-if (!data.user) {
-  throw new Error("Account could not be created.");
-}
-      
-
-
-      /* =========================
-         SUCCESS
-      ========================= */
-
-      message.classList.add("success");
-
-      message.style.display = "block";
-
-      message.textContent =
-        "Account created successfully!";
-
-
-      /*
-        If email confirmation is enabled,
-        Supabase may require the user
-        to verify email first.
-      */
-
-      if (!data.session) {
-
-        message.textContent =
-          "Account created! Please check your email to verify your account.";
-
-        button.disabled = false;
-
-        button.textContent = "Create Account →";
+        showError(
+          "Password must contain at least 8 characters."
+        );
 
         return;
+      }
 
+
+      if (password !== confirmPassword) {
+
+        showError(
+          "Passwords do not match."
+        );
+
+        return;
+      }
+
+
+      if (!terms) {
+
+        showError(
+          "Please accept the Terms of Service and Privacy Policy."
+        );
+
+        return;
       }
 
 
       /* =========================
-         REDIRECT
+         LOADING
       ========================= */
 
-      setTimeout(function() {
+      const button =
+        signupForm.querySelector(".signup-btn");
 
-        if (selectedRole === "customer") {
+      button.disabled = true;
 
-          window.location.href =
-            "customer-dashboard.html";
+      button.textContent =
+        "Creating Account...";
 
-        } else {
+      message.style.display = "none";
 
-          window.location.href =
-            "editor-application.html";
+
+      try {
+
+
+        /* =========================
+           CREATE SUPABASE ACCOUNT
+        ========================= */
+
+        const {
+          data,
+          error
+        } = await supabase.auth.signUp({
+
+          email: email,
+
+          password: password,
+
+          options: {
+
+            data: {
+
+              full_name:
+                firstName + " " + lastName,
+
+              phone:
+                phone,
+
+              role:
+                selectedRole
+
+            }
+
+          }
+
+        });
+
+
+        /* =========================
+           AUTH ERROR
+        ========================= */
+
+        if (error) {
+
+          throw error;
 
         }
 
-      }, 800);
+
+        if (!data.user) {
+
+          throw new Error(
+            "Account could not be created."
+          );
+
+        }
 
 
-    } catch (error) {
+        /* =========================
+           SUCCESS
+        ========================= */
 
-      console.error(error);
+        message.classList.add("success");
 
-
-      showError(
-        error.message ||
-        "Something went wrong. Please try again."
-      );
+        message.style.display = "block";
 
 
-      button.disabled = false;
+        /*
+          EMAIL CONFIRMATION
+        */
 
-      button.textContent =
-        "Create Account →";
+        if (!data.session) {
+
+          message.textContent =
+            "Account created! Please check your email to verify your account.";
+
+          button.disabled = false;
+
+          button.textContent =
+            "Create Account →";
+
+          return;
+
+        }
+
+
+        /*
+          USER IS LOGGED IN
+        */
+
+        message.textContent =
+          "Account created successfully!";
+
+
+        /* =========================
+           REDIRECT
+        ========================= */
+
+        setTimeout(function() {
+
+          if (selectedRole === "customer") {
+
+            window.location.href =
+              "customer-dashboard.html";
+
+          } else {
+
+            window.location.href =
+              "editor-application.html";
+
+          }
+
+        }, 800);
+
+
+      } catch (error) {
+
+        console.error(
+          "SIGNUP ERROR:",
+          error
+        );
+
+
+        showError(
+          error.message ||
+          "Something went wrong. Please try again."
+        );
+
+
+        button.disabled = false;
+
+        button.textContent =
+          "Create Account →";
+
+      }
 
     }
-
-  });
+  );
 
 
   /* =========================
-     ERROR MESSAGE
+     ERROR FUNCTION
   ========================= */
 
   function showError(text) {
@@ -927,7 +962,6 @@ if (!data.user) {
   }
 
 </script>
-          
 
 </body>
 </html>
