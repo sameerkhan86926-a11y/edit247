@@ -61,7 +61,23 @@
       padding: 40px 0 70px;
     }
 
-    /* PROFILE HEADER */
+    .loading,
+    .error {
+      background: #111;
+      border: 1px solid #242424;
+      border-radius: 15px;
+      padding: 40px;
+      text-align: center;
+      color: #888;
+    }
+
+    .error {
+      color: #ff6b6b;
+    }
+
+    #profileContent {
+      display: none;
+    }
 
     .profile-header {
       background: #111;
@@ -127,8 +143,6 @@
       margin-top: 5px;
     }
 
-    /* GRID */
-
     .grid {
       display: grid;
       grid-template-columns: 1.6fr 1fr;
@@ -153,8 +167,6 @@
       font-size: 14px;
       line-height: 1.7;
     }
-
-    /* STATS */
 
     .stats {
       display: grid;
@@ -182,8 +194,6 @@
       font-weight: bold;
     }
 
-    /* SKILLS */
-
     .skills {
       display: flex;
       flex-wrap: wrap;
@@ -199,8 +209,6 @@
       font-size: 11px;
     }
 
-    /* SAMPLE */
-
     .samples {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -208,7 +216,7 @@
     }
 
     .sample {
-      height: 150px;
+      min-height: 150px;
       background: #191919;
       border: 1px solid #292929;
       border-radius: 9px;
@@ -218,6 +226,15 @@
       color: #777;
       font-size: 13px;
       text-align: center;
+      padding: 15px;
+    }
+
+    .sample a {
+      color: #fff;
+    }
+
+    .sample a:hover {
+      color: #ff3b30;
     }
 
     .sample span {
@@ -226,11 +243,10 @@
       margin-bottom: 7px;
     }
 
-    /* INFO */
-
     .info-row {
       display: flex;
       justify-content: space-between;
+      gap: 20px;
       padding: 12px 0;
       border-bottom: 1px solid #222;
       font-size: 13px;
@@ -246,9 +262,8 @@
 
     .info-value {
       font-weight: bold;
+      text-align: right;
     }
-
-    /* HIRE */
 
     .hire-card {
       position: sticky;
@@ -303,40 +318,10 @@
       margin-top: 15px;
     }
 
-    /* REVIEWS */
-
-    .review {
-      padding: 15px 0;
-      border-bottom: 1px solid #222;
-    }
-
-    .review:last-child {
-      border-bottom: none;
-    }
-
-    .review-top {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 7px;
-    }
-
-    .review-name {
-      font-weight: bold;
+    .empty {
+      color: #666;
       font-size: 13px;
     }
-
-    .review-rating {
-      color: #ffb000;
-      font-size: 12px;
-    }
-
-    .review-text {
-      color: #777;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    /* MOBILE */
 
     @media (max-width: 800px) {
       .grid {
@@ -374,34 +359,48 @@
       .profile-header {
         padding: 22px;
       }
+
+      .info-row {
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .info-value {
+        text-align: left;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
+<header class="topbar">
 
-  <header class="topbar">
+  <div class="logo">
+    EDIT<span>24/7</span>
+  </div>
 
-    <div class="logo">
-      EDIT<span>24/7</span>
+  <a href="project-matching.html" class="back">
+    ← Back to Editors
+  </a>
+
+</header>
+
+
+<main>
+
+  <div class="container">
+
+    <div id="loading" class="loading">
+      Loading editor profile...
     </div>
 
-    <a
-      href="project-matching.html"
-      class="back"
-    >
-      ← Back to Editors
-    </a>
-
-  </header>
+    <div id="error" class="error" style="display:none;">
+      Unable to load editor profile.
+    </div>
 
 
-  <main>
-
-    <div class="container">
-
+    <div id="profileContent">
 
       <!-- PROFILE HEADER -->
 
@@ -409,22 +408,22 @@
 
         <div class="profile-main">
 
-          <div class="avatar">
+          <div class="avatar" id="avatar">
             🎬
           </div>
 
           <div>
 
-            <div class="name">
-              Editor Profile #1
+            <div class="name" id="editorName">
+              Editor
             </div>
 
             <div class="verified">
               ✓ EDIT24/7 Verified Editor
             </div>
 
-            <div class="speciality">
-              YouTube • Travel • Cinematic Editing
+            <div class="speciality" id="speciality">
+              Professional Video Editor
             </div>
 
           </div>
@@ -435,11 +434,11 @@
         <div class="rating-box">
 
           <div class="rating">
-            ★ 4.9 / 5
+            ★ <span id="rating">—</span> / 5
           </div>
 
           <div class="reviews">
-            Based on 42 reviews
+            Based on client reviews
           </div>
 
         </div>
@@ -449,11 +448,9 @@
 
       <div class="grid">
 
-
         <!-- LEFT -->
 
         <div>
-
 
           <!-- ABOUT -->
 
@@ -463,14 +460,8 @@
               About the Editor
             </h2>
 
-            <p class="about">
-
-              I am a professional video editor specializing in
-              YouTube videos, travel content and cinematic
-              storytelling. I focus on clean cuts, engaging
-              pacing, sound design and professional color
-              correction.
-
+            <p class="about" id="about">
+              No description available.
             </p>
 
 
@@ -482,8 +473,8 @@
                   Experience
                 </div>
 
-                <div class="stat-value">
-                  3+ Years
+                <div class="stat-value" id="experience">
+                  —
                 </div>
 
               </div>
@@ -492,11 +483,11 @@
               <div class="stat">
 
                 <div class="stat-label">
-                  Projects
+                  Availability
                 </div>
 
-                <div class="stat-value">
-                  120+
+                <div class="stat-value" id="availability">
+                  —
                 </div>
 
               </div>
@@ -505,11 +496,11 @@
               <div class="stat">
 
                 <div class="stat-label">
-                  Response
+                  Working Hours
                 </div>
 
-                <div class="stat-value">
-                  < 2 hrs
+                <div class="stat-value" id="workingHours">
+                  —
                 </div>
 
               </div>
@@ -527,40 +518,27 @@
               Skills
             </h2>
 
-            <div class="skills">
-
-              <span class="skill">
-                YouTube Editing
+            <div class="skills" id="skills">
+              <span class="empty">
+                No skills added yet.
               </span>
+            </div>
 
-              <span class="skill">
-                Travel Videos
+          </div>
+
+
+          <!-- VIDEO TYPES -->
+
+          <div class="card">
+
+            <h2>
+              Video Types
+            </h2>
+
+            <div class="skills" id="videoTypes">
+              <span class="empty">
+                No video types added yet.
               </span>
-
-              <span class="skill">
-                Cinematic Editing
-              </span>
-
-              <span class="skill">
-                Color Grading
-              </span>
-
-              <span class="skill">
-                Sound Design
-              </span>
-
-              <span class="skill">
-                Subtitles
-              </span>
-
-              <span class="skill">
-                Motion Graphics
-              </span>
-
-              <span class="skill">
-                Premiere Pro
-              </span>
-
             </div>
 
           </div>
@@ -574,42 +552,16 @@
               Sample Work
             </h2>
 
-            <div class="samples">
-
-              <div class="sample">
-                <div>
-                  <span>▶</span>
-                  Travel Video Sample
-                </div>
+            <div class="samples" id="samples">
+              <div class="empty">
+                No portfolio samples added yet.
               </div>
-
-              <div class="sample">
-                <div>
-                  <span>▶</span>
-                  YouTube Sample
-                </div>
-              </div>
-
-              <div class="sample">
-                <div>
-                  <span>▶</span>
-                  Cinematic Sample
-                </div>
-              </div>
-
-              <div class="sample">
-                <div>
-                  <span>▶</span>
-                  Color Grading Sample
-                </div>
-              </div>
-
             </div>
 
           </div>
 
 
-          <!-- EXPERIENCE -->
+          <!-- DETAILS -->
 
           <div class="card">
 
@@ -624,8 +576,8 @@
                 Editing Software
               </span>
 
-              <span class="info-value">
-                Premiere Pro
+              <span class="info-value" id="software">
+                —
               </span>
 
             </div>
@@ -634,24 +586,11 @@
             <div class="info-row">
 
               <span class="info-label">
-                Secondary Software
+                Phone
               </span>
 
-              <span class="info-value">
-                After Effects
-              </span>
-
-            </div>
-
-
-            <div class="info-row">
-
-              <span class="info-label">
-                Languages
-              </span>
-
-              <span class="info-value">
-                Hindi, English
+              <span class="info-value" id="phone">
+                —
               </span>
 
             </div>
@@ -660,11 +599,24 @@
             <div class="info-row">
 
               <span class="info-label">
-                Typical Delivery
+                Availability
               </span>
 
-              <span class="info-value">
-                3–5 Days
+              <span class="info-value" id="availabilityDetail">
+                —
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <span class="info-label">
+                Working Hours
+              </span>
+
+              <span class="info-value" id="workingHoursDetail">
+                —
               </span>
 
             </div>
@@ -672,78 +624,16 @@
           </div>
 
 
-          <!-- REVIEWS -->
+          <!-- BEST SAMPLE -->
 
           <div class="card">
 
             <h2>
-              Client Reviews
+              Best Sample
             </h2>
 
-
-            <div class="review">
-
-              <div class="review-top">
-
-                <div class="review-name">
-                  Client #1
-                </div>
-
-                <div class="review-rating">
-                  ★★★★★
-                </div>
-
-              </div>
-
-              <div class="review-text">
-                Great editing and very smooth communication.
-                The final video looked professional.
-              </div>
-
-            </div>
-
-
-            <div class="review">
-
-              <div class="review-top">
-
-                <div class="review-name">
-                  Client #2
-                </div>
-
-                <div class="review-rating">
-                  ★★★★★
-                </div>
-
-              </div>
-
-              <div class="review-text">
-                Excellent work and delivered before the
-                deadline. Would definitely hire again.
-              </div>
-
-            </div>
-
-
-            <div class="review">
-
-              <div class="review-top">
-
-                <div class="review-name">
-                  Client #3
-                </div>
-
-                <div class="review-rating">
-                  ★★★★☆
-                </div>
-
-              </div>
-
-              <div class="review-text">
-                Good quality editing with great attention
-                to detail.
-              </div>
-
+            <div id="bestSample" class="sample">
+              No best sample added.
             </div>
 
           </div>
@@ -755,9 +645,6 @@
 
         <aside>
 
-
-          <!-- HIRE -->
-
           <div class="card hire-card">
 
             <div class="price-title">
@@ -765,7 +652,7 @@
             </div>
 
             <div class="price">
-              ₹2,500
+              ₹<span id="rate">0</span>
             </div>
 
             <div class="price-note">
@@ -775,7 +662,7 @@
 
 
             <a
-              href="#"
+              href="customer-project.html"
               class="hire-btn"
             >
               Hire This Editor →
@@ -785,6 +672,7 @@
             <a
               href="#"
               class="message-btn"
+              id="messageBtn"
             >
               Send Message
             </a>
@@ -797,8 +685,6 @@
           </div>
 
 
-          <!-- SERVICE INFO -->
-
           <div class="card">
 
             <h2>
@@ -809,11 +695,24 @@
             <div class="info-row">
 
               <span class="info-label">
+                Rate Type
+              </span>
+
+              <span class="info-value" id="rateType">
+                —
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <span class="info-label">
                 Starting Price
               </span>
 
               <span class="info-value">
-                ₹2,500
+                ₹<span id="rateInfo">0</span>
               </span>
 
             </div>
@@ -822,24 +721,11 @@
             <div class="info-row">
 
               <span class="info-label">
-                Delivery
+                Availability
               </span>
 
-              <span class="info-value">
-                3–5 Days
-              </span>
-
-            </div>
-
-
-            <div class="info-row">
-
-              <span class="info-label">
-                Revisions
-              </span>
-
-              <span class="info-value">
-                2
+              <span class="info-value" id="serviceAvailability">
+                —
               </span>
 
             </div>
@@ -848,17 +734,16 @@
             <div class="info-row">
 
               <span class="info-label">
-                Platform
+                Software
               </span>
 
-              <span class="info-value">
-                EDIT24/7
+              <span class="info-value" id="serviceSoftware">
+                —
               </span>
 
             </div>
 
           </div>
-
 
         </aside>
 
@@ -866,7 +751,624 @@
 
     </div>
 
-  </main>
+  </div>
+
+</main>
+
+
+<script type="module">
+
+  import {
+    createClient
+  } from "https://esm.sh/@supabase/supabase-js@2";
+
+
+  const SUPABASE_URL =
+    "https://elnjavwjxgkiretyxbtt.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable_FXhmywNoVuWiwP4PJ1UHUQ_LwNG6QSW";
+
+
+  const supabase =
+    createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+
+  const loading =
+    document.getElementById("loading");
+
+  const errorBox =
+    document.getElementById("error");
+
+  const profileContent =
+    document.getElementById("profileContent");
+
+
+  function showError(message) {
+
+    loading.style.display = "none";
+
+    errorBox.textContent = message;
+
+    errorBox.style.display = "block";
+
+  }
+
+
+  function text(value, fallback = "—") {
+
+    if (
+      value === null ||
+      value === undefined ||
+      value === ""
+    ) {
+      return fallback;
+    }
+
+    return value;
+
+  }
+
+
+  function arrayValue(value) {
+
+    if (Array.isArray(value)) {
+      return value;
+    }
+
+    if (typeof value === "string") {
+
+      return value
+        .split(",")
+        .map(item => item.trim())
+        .filter(Boolean);
+
+    }
+
+    return [];
+
+  }
+
+
+  function getInitials(name) {
+
+    const parts =
+      name
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+
+    if (!parts.length) {
+      return "ED";
+    }
+
+    if (parts.length === 1) {
+      return parts[0]
+        .substring(0, 2)
+        .toUpperCase();
+    }
+
+    return (
+      parts[0].charAt(0) +
+      parts[parts.length - 1].charAt(0)
+    ).toUpperCase();
+
+  }
+
+
+  function createTags(container, values) {
+
+    container.innerHTML = "";
+
+    if (!values.length) {
+
+      const empty =
+        document.createElement("span");
+
+      empty.className = "empty";
+
+      empty.textContent =
+        "No information added yet.";
+
+      container.appendChild(empty);
+
+      return;
+
+    }
+
+
+    values.forEach(value => {
+
+      const tag =
+        document.createElement("span");
+
+      tag.className = "skill";
+
+      tag.textContent = value;
+
+      container.appendChild(tag);
+
+    });
+
+  }
+
+
+  function createPortfolio(values) {
+
+    const container =
+      document.getElementById("samples");
+
+    container.innerHTML = "";
+
+
+    if (!values.length) {
+
+      const empty =
+        document.createElement("div");
+
+      empty.className = "empty";
+
+      empty.textContent =
+        "No portfolio samples added yet.";
+
+      container.appendChild(empty);
+
+      return;
+
+    }
+
+
+    values.forEach((url, index) => {
+
+      const box =
+        document.createElement("div");
+
+      box.className = "sample";
+
+
+      const wrapper =
+        document.createElement("div");
+
+
+      const icon =
+        document.createElement("span");
+
+      icon.textContent = "▶";
+
+
+      const link =
+        document.createElement("a");
+
+      link.href = url;
+
+      link.target = "_blank";
+
+      link.rel = "noopener noreferrer";
+
+      link.textContent =
+        `Portfolio Sample ${index + 1}`;
+
+
+      wrapper.appendChild(icon);
+
+      wrapper.appendChild(link);
+
+      box.appendChild(wrapper);
+
+      container.appendChild(box);
+
+    });
+
+  }
+
+
+  async function loadProfile() {
+
+    try {
+
+      /*
+        CHECK LOGIN
+      */
+
+      const {
+        data: {
+          session
+        },
+        error: sessionError
+      } = await supabase.auth.getSession();
+
+
+      if (sessionError) {
+        throw sessionError;
+      }
+
+
+      /*
+        PROFILE ID FROM URL
+
+        Example:
+        editor-profile.html?id=UUID
+      */
+
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
+
+      const profileId =
+        params.get("id");
+
+
+      let query =
+        supabase
+          .from("editor_profiles")
+          .select("*");
+
+
+      /*
+        IF URL HAS ID
+        LOAD THAT EDITOR
+      */
+
+      if (profileId) {
+
+        query =
+          query.eq(
+            "id",
+            profileId
+          );
+
+      } else {
+
+        /*
+          OTHERWISE LOAD
+          CURRENT LOGGED-IN EDITOR
+        */
+
+        if (!session) {
+
+          window.location.href =
+            "login.html";
+
+          return;
+
+        }
+
+        query =
+          query.eq(
+            "id",
+            session.user.id
+          );
+
+      }
+
+
+      const {
+        data,
+        error
+      } = await query
+        .maybeSingle();
+
+
+      if (error) {
+        throw error;
+      }
+
+
+      if (!data) {
+
+        showError(
+          "Editor profile not found."
+        );
+
+        return;
+
+      }
+
+
+      /*
+        BASIC INFORMATION
+      */
+
+      const fullName =
+        text(
+          data.full_name,
+          "Editor"
+        );
+
+
+      document.getElementById(
+        "editorName"
+      ).textContent =
+        fullName;
+
+
+      document.getElementById(
+        "avatar"
+      ).textContent =
+        getInitials(fullName);
+
+
+      document.getElementById(
+        "about"
+      ).textContent =
+        text(
+          data.about,
+          "This editor has not added an introduction yet."
+        );
+
+
+      /*
+        EXPERIENCE
+      */
+
+      document.getElementById(
+        "experience"
+      ).textContent =
+        text(data.experience);
+
+
+      /*
+        AVAILABILITY
+      */
+
+      document.getElementById(
+        "availability"
+      ).textContent =
+        text(data.availability);
+
+
+      document.getElementById(
+        "availabilityDetail"
+      ).textContent =
+        text(data.availability);
+
+
+      document.getElementById(
+        "serviceAvailability"
+      ).textContent =
+        text(data.availability);
+
+
+      /*
+        WORKING HOURS
+      */
+
+      document.getElementById(
+        "workingHours"
+      ).textContent =
+        text(data.working_hours);
+
+
+      document.getElementById(
+        "workingHoursDetail"
+      ).textContent =
+        text(data.working_hours);
+
+
+      /*
+        VIDEO TYPES
+      */
+
+      const videoTypes =
+        arrayValue(
+          data.video_types
+        );
+
+
+      createTags(
+        document.getElementById(
+          "videoTypes"
+        ),
+        videoTypes
+      );
+
+
+      /*
+        SKILLS
+      */
+
+      const skills =
+        arrayValue(
+          data.skills
+        );
+
+
+      createTags(
+        document.getElementById(
+          "skills"
+        ),
+        skills
+      );
+
+
+      /*
+        SOFTWARE
+      */
+
+      const software =
+        arrayValue(
+          data.software
+        );
+
+
+      document.getElementById(
+        "software"
+      ).textContent =
+        software.length
+          ? software.join(", ")
+          : "—";
+
+
+      document.getElementById(
+        "serviceSoftware"
+      ).textContent =
+        software.length
+          ? software.join(", ")
+          : "—";
+
+
+      /*
+        PHONE
+      */
+
+      document.getElementById(
+        "phone"
+      ).textContent =
+        text(data.phone);
+
+
+      /*
+        RATE TYPE
+
+        Column name contains a space:
+        "rate type"
+      */
+
+      const rateType =
+        data["rate type"];
+
+
+      document.getElementById(
+        "rateType"
+      ).textContent =
+        text(rateType);
+
+
+      /*
+        RATE
+      */
+
+      const rate =
+        Number(data.rate || 0);
+
+
+      document.getElementById(
+        "rate"
+      ).textContent =
+        rate.toLocaleString("en-IN");
+
+
+      document.getElementById(
+        "rateInfo"
+      ).textContent =
+        rate.toLocaleString("en-IN");
+
+
+      /*
+        SPECIALITY
+      */
+
+      document.getElementById(
+        "speciality"
+      ).textContent =
+        videoTypes.length
+          ? videoTypes.join(" • ")
+          : "Professional Video Editor";
+
+
+      /*
+        BEST SAMPLE
+      */
+
+      const bestSample =
+        data["best sample"];
+
+
+      const bestSampleBox =
+        document.getElementById(
+          "bestSample"
+        );
+
+
+      if (bestSample) {
+
+        bestSampleBox.innerHTML = "";
+
+
+        const wrapper =
+          document.createElement("div");
+
+
+        const icon =
+          document.createElement("span");
+
+        icon.textContent = "▶";
+
+
+        const link =
+          document.createElement("a");
+
+        link.href =
+          bestSample;
+
+        link.target =
+          "_blank";
+
+        link.rel =
+          "noopener noreferrer";
+
+        link.textContent =
+          "Open Best Sample";
+
+
+        wrapper.appendChild(icon);
+
+        wrapper.appendChild(link);
+
+        bestSampleBox.appendChild(
+          wrapper
+        );
+
+      }
+
+
+      /*
+        PORTFOLIO
+      */
+
+      createPortfolio(
+        arrayValue(data.portfolio)
+      );
+
+
+      /*
+        SHOW PROFILE
+      */
+
+      loading.style.display =
+        "none";
+
+      profileContent.style.display =
+        "block";
+
+
+    } catch (error) {
+
+      console.error(
+        "Profile loading error:",
+        error
+      );
+
+      showError(
+        "Could not load editor profile. Please try again."
+      );
+
+    }
+
+  }
+
+
+  /*
+    START
+  */
+
+  loadProfile();
+
+</script>
 
 </body>
 </html>
