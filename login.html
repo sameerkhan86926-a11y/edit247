@@ -492,62 +492,92 @@
     </div>
 
   </main>
+ <script type="module">
+
+  import { createClient }
+    from "https://esm.sh/@supabase/supabase-js@2";
 
 
-  <!-- DEMO LOGIN SYSTEM -->
+  /* =========================
+     SUPABASE
+  ========================= */
 
-  <script>
+  const SUPABASE_URL =
+    "https://elnjavwjxgkiretyxbtt.supabase.co";
 
-    const roles = document.querySelectorAll(".role");
-
-    const form = document.getElementById("loginForm");
-
-    const message = document.getElementById("message");
+  const SUPABASE_KEY =
+    "sb_publishable_FXhmywNoVuWiwP4PJ1UHUQ_LwNG6QSW";
 
 
-    /*
-      ROLE SELECTION
-    */
+  const supabase =
+    createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
 
-    roles.forEach(function(role) {
 
-      role.addEventListener("click", function() {
+  /* =========================
+     ELEMENTS
+  ========================= */
 
-        roles.forEach(function(item) {
-          item.classList.remove("active");
-        });
+  const roles =
+    document.querySelectorAll(".role");
 
-        role.classList.add("active");
+  const form =
+    document.getElementById("loginForm");
 
-        const radio = role.querySelector("input");
+  const message =
+    document.getElementById("message");
 
-        radio.checked = true;
+
+  /* =========================
+     ROLE SELECTION
+  ========================= */
+
+  roles.forEach(function(role) {
+
+    role.addEventListener("click", function() {
+
+      roles.forEach(function(item) {
+
+        item.classList.remove("active");
 
       });
 
+      role.classList.add("active");
+
+      const radio =
+        role.querySelector("input");
+
+      radio.checked = true;
+
     });
 
+  });
 
-    /*
-      LOGIN
 
-      NOTE:
-      This is only frontend/demo routing.
+  /* =========================
+     LOGIN
+  ========================= */
 
-      Real authentication will be connected
-      later with database + backend.
-    */
-
-    form.addEventListener("submit", function(event) {
+  form.addEventListener(
+    "submit",
+    async function(event) {
 
       event.preventDefault();
 
 
       const email =
-        document.getElementById("email").value.trim();
+        document
+          .getElementById("email")
+          .value
+          .trim();
 
       const password =
-        document.getElementById("password").value.trim();
+        document
+          .getElementById("password")
+          .value;
+
 
       const selectedRole =
         document.querySelector(
@@ -555,61 +585,213 @@
         ).value;
 
 
+      /* =========================
+         VALIDATION
+      ========================= */
+
       if (!email || !password) {
 
-        message.style.display = "block";
-
-        message.textContent =
-          "Please enter your email and password.";
-
-        return;
-      }
-
-
-      message.style.display = "none";
-
-
-      /*
-        CUSTOMER
-      */
-
-      if (selectedRole === "customer") {
-
-        window.location.href =
-          "customer-dashboard.html";
+        showError(
+          "Please enter your email and password."
+        );
 
         return;
+
       }
 
 
       /*
-        EDITOR
-      */
-
-      if (selectedRole === "editor") {
-
-        window.location.href =
-          "editor-dashboard.html";
-
-        return;
-      }
-
-
-      /*
-        ADMIN
+        Admin is disabled for now.
+        We will secure admin access
+        separately later.
       */
 
       if (selectedRole === "admin") {
 
-        window.location.href =
-          "admin-dashboard.html";
+        showError(
+          "Admin login will be enabled after secure admin access is configured."
+        );
 
         return;
+
       }
 
-    });
 
-  </script>
+      /* =========================
+         LOADING
+      ========================= */
+
+      const button =
+        form.querySelector(".login-btn");
+
+
+      button.disabled = true;
+
+      button.textContent =
+        "Logging in...";
+
+      message.style.display =
+        "none";
+
+
+      try {
+
+
+        /* =========================
+           SUPABASE LOGIN
+        ========================= */
+
+        const {
+          data,
+          error
+        } =
+          await supabase.auth.signInWithPassword({
+
+            email:
+              email,
+
+            password:
+              password
+
+          });
+
+
+        if (error) {
+
+          throw error;
+
+        }
+
+
+        if (!data.user) {
+
+          throw new Error(
+            "Login failed. Please try again."
+          );
+
+        }
+
+
+        /* =========================
+           GET USER ROLE
+        ========================= */
+
+        const actualRole =
+          data.user.user_metadata?.role;
+
+
+        /*
+          Make sure selected login
+          role matches account role.
+        */
+
+        if (
+          actualRole &&
+          actualRole !== selectedRole
+        ) {
+
+          await supabase.auth.signOut();
+
+          throw new Error(
+            "This account is registered as " +
+            actualRole +
+            ". Please select the correct login type."
+          );
+
+        }
+
+
+        /* =========================
+           SUCCESS
+        ========================= */
+
+        message.classList.add(
+          "success"
+        );
+
+        message.style.display =
+          "block";
+
+        message.textContent =
+          "Login successful! Redirecting...";
+
+
+        /* =========================
+           REDIRECT
+        ========================= */
+
+        setTimeout(function() {
+
+
+          if (actualRole === "editor") {
+
+            window.location.href =
+              "editor-dashboard.html";
+
+            return;
+
+          }
+
+
+          /*
+            Default customer
+          */
+
+          window.location.href =
+            "customer-dashboard.html";
+
+
+        }, 700);
+
+
+      } catch (error) {
+
+        console.error(
+          "LOGIN ERROR:",
+          error
+        );
+
+
+        showError(
+          error.message ||
+          "Invalid email or password."
+        );
+
+
+        button.disabled =
+          false;
+
+        button.textContent =
+          "Login →";
+
+      }
+
+    }
+  );
+
+
+  /* =========================
+     ERROR
+  ========================= */
+
+  function showError(text) {
+
+    message.classList.remove(
+      "success"
+    );
+
+    message.style.display =
+      "block";
+
+    message.textContent =
+      text;
+
+  }
+
+</script>
+
+
+  
 
 </body>
 </html>
