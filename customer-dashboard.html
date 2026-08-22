@@ -1,3 +1,4 @@
+customer-dashboard.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,8 +29,6 @@
       min-height: 100vh;
       display: flex;
     }
-
-    /* SIDEBAR */
 
     .sidebar {
       width: 240px;
@@ -84,8 +83,6 @@
       right: 18px;
     }
 
-    /* MAIN */
-
     .main {
       margin-left: 240px;
       width: calc(100% - 240px);
@@ -120,14 +117,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 13px;
+      font-weight: bold;
     }
 
     .content {
       padding: 35px;
       max-width: 1300px;
     }
-
-    /* WELCOME */
 
     .welcome {
       background: #121212;
@@ -160,8 +157,6 @@
       white-space: nowrap;
     }
 
-    /* STATS */
-
     .stats {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -186,8 +181,6 @@
       font-size: 28px;
       font-weight: bold;
     }
-
-    /* PROJECTS */
 
     .section-header {
       display: flex;
@@ -255,19 +248,9 @@
       color: #aaa;
     }
 
-    .status.progress {
-      color: #ffb000;
-    }
-
-    .status.completed {
-      color: #4ade80;
-    }
-
     .status.pending {
       color: #aaa;
     }
-
-    /* EDITOR */
 
     .editor-card {
       background: #111;
@@ -314,7 +297,17 @@
       font-size: 13px;
     }
 
-    /* MOBILE */
+    .loading {
+      color: #777;
+      padding: 25px;
+      text-align: center;
+    }
+
+    .error-message {
+      color: #ff6b61;
+      padding: 20px;
+      text-align: center;
+    }
 
     @media (max-width: 900px) {
 
@@ -342,10 +335,6 @@
       .nav-item {
         text-align: center;
         font-size: 0;
-      }
-
-      .nav-item::first-letter {
-        font-size: 18px;
       }
 
       .sidebar-bottom {
@@ -403,7 +392,6 @@
 
 <div class="layout">
 
-
   <!-- SIDEBAR -->
 
   <aside class="sidebar">
@@ -412,12 +400,11 @@
       EDIT<span>24/7</span>
     </div>
 
-
     <div class="nav-title">
       Workspace
     </div>
 
-    <a href="#" class="nav-item active">
+    <a href="customer-dashboard.html" class="nav-item active">
       🏠 Dashboard
     </a>
 
@@ -433,7 +420,6 @@
       👤 My Editors
     </a>
 
-
     <div class="nav-title" style="margin-top:25px;">
       Account
     </div>
@@ -442,7 +428,7 @@
       ⚙ Settings
     </a>
 
-    <a href="login.html" class="nav-item">
+    <a href="#" id="logoutBtn" class="nav-item">
       ↪ Logout
     </a>
 
@@ -453,7 +439,6 @@
 
   <div class="main">
 
-
     <!-- TOPBAR -->
 
     <header class="topbar">
@@ -462,12 +447,12 @@
 
       <div class="profile">
 
-        <div class="avatar">
-          SK
+        <div class="avatar" id="avatar">
+          --
         </div>
 
-        <span>
-          Customer
+        <span id="topbarName">
+          Loading...
         </span>
 
       </div>
@@ -479,14 +464,13 @@
 
     <main class="content">
 
-
       <!-- WELCOME -->
 
       <div class="welcome">
 
         <div>
 
-          <h2>
+          <h2 id="welcomeName">
             Welcome back! 👋
           </h2>
 
@@ -516,7 +500,7 @@
             Total Projects
           </div>
 
-          <div class="stat-value">
+          <div class="stat-value" id="totalProjects">
             0
           </div>
 
@@ -529,7 +513,7 @@
             Active Projects
           </div>
 
-          <div class="stat-value">
+          <div class="stat-value" id="activeProjects">
             0
           </div>
 
@@ -542,7 +526,7 @@
             Completed
           </div>
 
-          <div class="stat-value">
+          <div class="stat-value" id="completedProjects">
             0
           </div>
 
@@ -555,7 +539,7 @@
             Total Spent
           </div>
 
-          <div class="stat-value">
+          <div class="stat-value" id="totalSpent">
             ₹0
           </div>
 
@@ -579,64 +563,11 @@
       </div>
 
 
-      <div class="projects">
+      <div class="projects" id="projectsContainer">
 
-
-        <div class="project">
-
-          <div>
-
-            <div class="project-name">
-              No projects yet
-            </div>
-
-            <div class="project-type">
-              Start your first project to see it here.
-            </div>
-
-          </div>
-
-
-          <div>
-
-            <div class="project-label">
-              STATUS
-            </div>
-
-            <span class="status pending">
-              Not Started
-            </span>
-
-          </div>
-
-
-          <div>
-
-            <div class="project-label">
-              EDITOR
-            </div>
-
-            <div class="project-value">
-              —
-            </div>
-
-          </div>
-
-
-          <div>
-
-            <div class="project-label">
-              BUDGET
-            </div>
-
-            <div class="project-value">
-              —
-            </div>
-
-          </div>
-
+        <div class="loading">
+          Loading projects...
         </div>
-
 
       </div>
 
@@ -684,12 +615,328 @@
 
       </div>
 
-
     </main>
 
   </div>
 
 </div>
+
+
+<script type="module">
+
+  import { createClient }
+    from "https://esm.sh/@supabase/supabase-js@2";
+
+
+  /* =========================
+     SUPABASE
+  ========================= */
+
+  const SUPABASE_URL =
+    "https://elnjavwjxgkiretyxbtt.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable_FXhmywNoVuWiwP4PJ1UHUQ_LwNG6QSW";
+
+  const supabase =
+    createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+
+  /* =========================
+     ELEMENTS
+  ========================= */
+
+  const welcomeName =
+    document.getElementById("welcomeName");
+
+  const topbarName =
+    document.getElementById("topbarName");
+
+  const avatar =
+    document.getElementById("avatar");
+
+  const projectsContainer =
+    document.getElementById("projectsContainer");
+
+  const logoutBtn =
+    document.getElementById("logoutBtn");
+
+
+  /* =========================
+     GET LOGGED-IN USER
+  ========================= */
+
+  async function loadCustomer() {
+
+    const {
+      data: {
+        session
+      },
+      error
+    } = await supabase.auth.getSession();
+
+
+    if (error) {
+
+      console.error(
+        "SESSION ERROR:",
+        error
+      );
+
+      window.location.href =
+        "login.html";
+
+      return;
+
+    }
+
+
+    if (!session) {
+
+      window.location.href =
+        "login.html";
+
+      return;
+
+    }
+
+
+    const user =
+      session.user;
+
+
+    /* =========================
+       GET PROFILE
+    ========================= */
+
+    const {
+      data: profile,
+      error: profileError
+    } = await supabase
+      .from("profile")
+      .select(
+        "id, full_name, email, phone, role"
+      )
+      .eq(
+        "id",
+        user.id
+      )
+      .maybeSingle();
+
+
+    if (profileError) {
+
+      console.error(
+        "PROFILE ERROR:",
+        profileError
+      );
+
+      alert(
+        "Unable to load your profile."
+      );
+
+      return;
+
+    }
+
+
+    /* =========================
+       CHECK ROLE
+    ========================= */
+
+    const role =
+      profile?.role ||
+      user.user_metadata?.role;
+
+
+    if (role !== "customer") {
+
+      alert(
+        "This dashboard is only available for customer accounts."
+      );
+
+      window.location.href =
+        "login.html";
+
+      return;
+
+    }
+
+
+    /* =========================
+       CUSTOMER NAME
+    ========================= */
+
+    const fullName =
+      profile?.full_name ||
+      user.user_metadata?.full_name ||
+      user.email?.split("@")[0] ||
+      "Customer";
+
+
+    const firstName =
+      fullName
+        .trim()
+        .split(" ")[0];
+
+
+    welcomeName.textContent =
+      `Welcome back, ${firstName}! 👋`;
+
+
+    topbarName.textContent =
+      fullName;
+
+
+    /* =========================
+       AVATAR INITIALS
+    ========================= */
+
+    const initials =
+      fullName
+        .trim()
+        .split(/\s+/)
+        .slice(0, 2)
+        .map(
+          name => name.charAt(0).toUpperCase()
+        )
+        .join("");
+
+
+    avatar.textContent =
+      initials || "CU";
+
+
+    /* =========================
+       LOAD PROJECTS
+       
+       Project table/schema will be
+       connected after we confirm its
+       exact columns.
+    ========================= */
+
+    showEmptyProjects();
+
+  }
+
+
+  /* =========================
+     EMPTY PROJECT STATE
+  ========================= */
+
+  function showEmptyProjects() {
+
+    projectsContainer.innerHTML = `
+
+      <div class="project">
+
+        <div>
+
+          <div class="project-name">
+            No projects yet
+          </div>
+
+          <div class="project-type">
+            Start your first project to see it here.
+          </div>
+
+        </div>
+
+
+        <div>
+
+          <div class="project-label">
+            STATUS
+          </div>
+
+          <span class="status pending">
+            Not Started
+          </span>
+
+        </div>
+
+
+        <div>
+
+          <div class="project-label">
+            EDITOR
+          </div>
+
+          <div class="project-value">
+            —
+          </div>
+
+        </div>
+
+
+        <div>
+
+          <div class="project-label">
+            BUDGET
+          </div>
+
+          <div class="project-value">
+            —
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+  /* =========================
+     LOGOUT
+  ========================= */
+
+  logoutBtn.addEventListener(
+    "click",
+    async function(event) {
+
+      event.preventDefault();
+
+
+      const {
+        error
+      } = await supabase.auth.signOut();
+
+
+      if (error) {
+
+        console.error(
+          "LOGOUT ERROR:",
+          error
+        );
+
+        alert(
+          "Unable to logout. Please try again."
+        );
+
+        return;
+
+      }
+
+
+      window.location.href =
+        "login.html";
+
+    }
+  );
+
+
+  /* =========================
+     START
+  ========================= */
+
+  loadCustomer();
+
+</script>
 
 </body>
 </html>
