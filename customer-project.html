@@ -85,6 +85,13 @@
       background: #0a0a0a;
       color: white;
       font-size: 15px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #ff3b30;
     }
 
     textarea {
@@ -103,6 +110,7 @@
       padding: 12px;
       border-radius: 8px;
       color: #bbb;
+      font-weight: normal;
     }
 
     .checkbox input {
@@ -122,11 +130,27 @@
       cursor: pointer;
     }
 
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
     .note {
       text-align: center;
       margin-top: 15px;
       color: #666;
       font-size: 13px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 25px;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .back-btn:hover {
+      color: white;
     }
 
     @media (max-width: 600px) {
@@ -163,6 +187,10 @@
 
     <div class="container">
 
+      <a href="customer-dashboard.html" class="back-btn">
+        ← Back to Dashboard
+      </a>
+
       <div class="heading">
 
         <h1>Tell Us What You Need</h1>
@@ -177,7 +205,7 @@
 
       <div class="form-box">
 
-        <form>
+        <form id="projectForm">
 
           <div class="form-group">
 
@@ -185,7 +213,7 @@
               What type of video do you need?
             </label>
 
-            <select id="projectType" name="projectType">
+            <select id="projectType" required>
 
               <option value="">
                 Select video type
@@ -214,7 +242,6 @@
             <input
               type="text"
               id="finalLength"
-              name="finalLength"
               placeholder="Example: 10 minutes"
             >
 
@@ -230,7 +257,6 @@
             <input
               type="text"
               id="rawFootage"
-              name="rawFootage"
               placeholder="Example: 30 minutes"
             >
 
@@ -246,42 +272,42 @@
             <div class="checkbox-group">
 
               <label class="checkbox">
-                <input type="checkbox">
+                <input type="checkbox" value="Cutting">
                 Cutting
               </label>
 
               <label class="checkbox">
-                <input type="checkbox">
+                <input type="checkbox" value="Captions">
                 Captions
               </label>
 
               <label class="checkbox">
-                <input type="checkbox">
+                <input type="checkbox" value="B-roll">
                 B-roll
               </label>
 
               <label class="checkbox">
-                <input type="checkbox">
+                <input type="checkbox" value="Motion Graphics">
                 Motion Graphics
               </label>
 
               <label class="checkbox">
-                <input type="checkbox">
+                <input type="checkbox" value="Color Correction">
                 Color Correction
               </label>
 
               <label class="checkbox">
-                <input type="checkbox">
+                <input type="checkbox" value="Sound Editing">
                 Sound Editing
               </label>
 
               <label class="checkbox">
-                <input type="checkbox">
+                <input type="checkbox" value="Background Music">
                 Background Music
               </label>
 
               <label class="checkbox">
-                <input type="checkbox">
+                <input type="checkbox" value="Effects">
                 Effects
               </label>
 
@@ -296,7 +322,7 @@
               When do you need it?
             </label>
 
-            <select id="deadline" name="deadline">
+            <select id="deadline" required>
 
               <option value="">
                 Select deadline
@@ -320,7 +346,7 @@
               Number of revisions
             </label>
 
-            <select id="revisions" name="revisions">
+            <select id="revisions">
 
               <option>1 Revision</option>
               <option>2 Revisions</option>
@@ -341,7 +367,7 @@
             <input
               type="number"
               id="budget"
-              name="budget"
+              min="0"
               placeholder="₹ Example: 2500"
             >
 
@@ -356,14 +382,17 @@
 
             <textarea
               id="description"
-              name="description"
               placeholder="Describe the editing style, references, requirements, etc."
             ></textarea>
 
           </div>
 
 
-          <button type="submit" class="submit-btn">
+          <button
+            type="submit"
+            class="submit-btn"
+            id="submitBtn"
+          >
             Get My Price Estimate →
           </button>
 
@@ -378,6 +407,361 @@
     </div>
 
   </main>
+
+
+  <script type="module">
+
+    import { createClient }
+      from "https://esm.sh/@supabase/supabase-js@2";
+
+
+    /* =========================
+       SUPABASE
+    ========================= */
+
+    const SUPABASE_URL =
+      "https://elnjavwjxgkiretyxbtt.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_FXhmywNoVuWiwP4PJ1UHUQ_LwNG6Q00";
+
+
+    const supabase =
+      createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+    /* =========================
+       FORM
+    ========================= */
+
+    const form =
+      document.getElementById("projectForm");
+
+    const submitBtn =
+      document.getElementById("submitBtn");
+
+
+    /* =========================
+       CHECK LOGIN
+    ========================= */
+
+    const {
+      data: {
+        session
+      },
+      error: sessionError
+    } = await supabase.auth.getSession();
+
+
+    if (sessionError) {
+
+      console.error(
+        "SESSION ERROR:",
+        sessionError
+      );
+
+    }
+
+
+    if (!session) {
+
+      alert("Please login first.");
+
+      window.location.href =
+        "login.html";
+
+      throw new Error(
+        "User is not logged in."
+      );
+
+    }
+
+
+    const user =
+      session.user;
+
+
+    /* =========================
+       CHECK CUSTOMER ROLE
+    ========================= */
+
+    const userRole =
+      user.user_metadata?.role;
+
+
+    if (
+      userRole &&
+      userRole !== "customer"
+    ) {
+
+      alert(
+        "This page is only available for customer accounts."
+      );
+
+      window.location.href =
+        "login.html";
+
+      throw new Error(
+        "User is not a customer."
+      );
+
+    }
+
+
+    /* =========================
+       SUBMIT
+    ========================= */
+
+    form.addEventListener(
+      "submit",
+      async function(event) {
+
+        event.preventDefault();
+
+
+        const projectType =
+          document
+            .getElementById("projectType")
+            .value;
+
+
+        const finalLength =
+          document
+            .getElementById("finalLength")
+            .value
+            .trim();
+
+
+        const rawFootage =
+          document
+            .getElementById("rawFootage")
+            .value
+            .trim();
+
+
+        const deadline =
+          document
+            .getElementById("deadline")
+            .value;
+
+
+        const revisions =
+          document
+            .getElementById("revisions")
+            .value;
+
+
+        const budgetValue =
+          document
+            .getElementById("budget")
+            .value
+            .trim();
+
+
+        const budget =
+          budgetValue
+            ? Number(budgetValue)
+            : null;
+
+
+        const description =
+          document
+            .getElementById("description")
+            .value
+            .trim();
+
+
+        /* =========================
+           EDITING REQUIREMENTS
+        ========================= */
+
+        const editingRequirements = [];
+
+        document
+          .querySelectorAll(
+            '.checkbox-group input[type="checkbox"]:checked'
+          )
+          .forEach(function(input) {
+
+            editingRequirements.push(
+              input.value
+            );
+
+          });
+
+
+        /* =========================
+           VALIDATION
+        ========================= */
+
+        if (!projectType) {
+
+          alert(
+            "Please select the video type."
+          );
+
+          return;
+
+        }
+
+
+        if (!deadline) {
+
+          alert(
+            "Please select a deadline."
+          );
+
+          return;
+
+        }
+
+
+        if (
+          budgetValue &&
+          (
+            isNaN(budget) ||
+            budget < 0
+          )
+        ) {
+
+          alert(
+            "Please enter a valid budget."
+          );
+
+          return;
+
+        }
+
+
+        /* =========================
+           LOADING
+        ========================= */
+
+        submitBtn.disabled = true;
+
+        submitBtn.textContent =
+          "Creating Project...";
+
+
+        try {
+
+          /* =========================
+             INSERT PROJECT
+          ========================= */
+
+          const {
+            data,
+            error
+          } = await supabase
+            .from("projects")
+            .insert({
+
+              customer_id:
+                user.id,
+
+              project_type:
+                projectType,
+
+              final_length:
+                finalLength || null,
+
+              raw_footage:
+                rawFootage || null,
+
+              editing_requirements:
+                editingRequirements,
+
+              deadline:
+                deadline,
+
+              revisions:
+                revisions,
+
+              budget:
+                budget,
+
+              description:
+                description || null,
+
+              status:
+                "pending"
+
+            })
+            .select()
+            .single();
+
+
+          /* =========================
+             DATABASE ERROR
+          ========================= */
+
+          if (error) {
+
+            console.error(
+              "SUPABASE PROJECT ERROR:",
+              error
+            );
+
+            throw error;
+
+          }
+
+
+          console.log(
+            "PROJECT CREATED:",
+            data
+          );
+
+
+          /* =========================
+             SUCCESS
+          ========================= */
+
+          submitBtn.textContent =
+            "Project Created ✓";
+
+
+          alert(
+            "Project created successfully!"
+          );
+
+
+          /* =========================
+             REDIRECT
+          ========================= */
+
+          window.location.href =
+            "customer-dashboard.html";
+
+
+        } catch (error) {
+
+          console.error(
+            "PROJECT ERROR:",
+            error
+          );
+
+
+          alert(
+            error.message ||
+            "Unable to create project. Please try again."
+          );
+
+
+          submitBtn.disabled =
+            false;
+
+          submitBtn.textContent =
+            "Get My Price Estimate →";
+
+        }
+
+      });
+
+  </script>
 
 </body>
 </html>
