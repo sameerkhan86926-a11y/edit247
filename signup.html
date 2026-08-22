@@ -826,21 +826,15 @@
           password: password,
 
           options: {
+  emailRedirectTo:
+    "https://sameerkhan86926-a11y.github.io/edit247/auth-callback.html",
 
-            data: {
-
-              full_name:
-                firstName + " " + lastName,
-
-              phone:
-                phone,
-
-              role:
-                selectedRole
-
-            }
-
-          }
+  data: {
+    full_name: firstName + " " + lastName,
+    phone: phone,
+    role: selectedRole
+  }
+}
 
         });
 
