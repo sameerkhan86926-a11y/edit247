@@ -795,6 +795,444 @@
     </div>
 
   </main>
+  <script type="module">
+
+  import { createClient }
+    from "https://esm.sh/@supabase/supabase-js@2";
+
+
+  const SUPABASE_URL =
+    "https://elnjavwjxgkiretyxbtt.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable_FXhmywNoVuWiwP4PJ1UHUQ_LwNG6QSW";
+
+
+  const supabase =
+    createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+
+  /*
+  =========================
+  CHECK LOGIN
+  =========================
+  */
+
+  const {
+    data: {
+      session
+    }
+  } = await supabase.auth.getSession();
+
+
+  if (!session) {
+
+    window.location.href =
+      "login.html";
+
+    throw new Error("User is not logged in.");
+
+  }
+
+
+  const user =
+    session.user;
+
+
+  const metadata =
+    user.user_metadata || {};
+
+
+  /*
+  =========================
+  CHECK EDITOR ROLE
+  =========================
+  */
+
+  if (metadata.role !== "editor") {
+
+    alert(
+      "Only editor accounts can submit an editor application."
+    );
+
+    window.location.href =
+      "customer-dashboard.html";
+
+    throw new Error("Not an editor.");
+
+  }
+
+
+  /*
+  =========================
+  GET FORM
+  =========================
+  */
+
+  const form =
+    document.querySelector(".form-box form");
+
+
+  const submitButton =
+    form.querySelector(".submit-btn");
+
+
+  /*
+  =========================
+  SUBMIT APPLICATION
+  =========================
+  */
+
+  form.addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+
+      /*
+      GET BASIC INFORMATION
+      */
+
+      const firstName =
+        document
+          .getElementById("firstName")
+          .value
+          .trim();
+
+
+      const lastName =
+        document
+          .getElementById("lastName")
+          .value
+          .trim();
+
+
+      const email =
+        document
+          .getElementById("email")
+          .value
+          .trim();
+
+
+      const phone =
+        document
+          .getElementById("phone")
+          .value
+          .trim();
+
+
+      /*
+      EXPERIENCE
+      */
+
+      const experience =
+        document
+          .getElementById("experience")
+          .value;
+
+
+      const about =
+        document
+          .getElementById("about")
+          .value
+          .trim();
+
+
+      /*
+      SKILLS
+      */
+
+      const skillsText =
+        document
+          .getElementById("skills")
+          .value
+          .trim();
+
+
+      /*
+      SOFTWARE
+      */
+
+      const software =
+        Array.from(
+          document.querySelectorAll(
+            ".section:nth-of-type(3) .skill input:checked"
+          )
+        ).map(function(input) {
+
+          return input.parentElement
+            .textContent
+            .trim();
+
+        });
+
+
+      /*
+      VIDEO TYPES
+      */
+
+      const videoTypes =
+        Array.from(
+          document.querySelectorAll(
+            ".section:nth-of-type(2) .skill input:checked"
+          )
+        ).map(function(input) {
+
+          return input.parentElement
+            .textContent
+            .trim();
+
+        });
+
+
+      /*
+      PORTFOLIO
+      */
+
+      const portfolioInputs =
+        document.querySelectorAll(
+          '.portfolio-item input[type="url"]'
+        );
+
+
+      const portfolio =
+        Array.from(portfolioInputs)
+          .map(function(input) {
+
+            return input.value.trim();
+
+          })
+          .filter(function(url) {
+
+            return url !== "";
+
+          });
+
+
+      /*
+      RATE
+      */
+
+      const rateType =
+        document
+          .getElementById("rateType")
+          .value;
+
+
+      const rate =
+        document
+          .getElementById("rate")
+          .value;
+
+
+      /*
+      AVAILABILITY
+      */
+
+      const availability =
+        document
+          .getElementById("availability")
+          .value;
+
+
+      const hours =
+        document
+          .getElementById("hours")
+          .value
+          .trim();
+
+
+      /*
+      BEST SAMPLE
+      */
+
+      const sample =
+        document
+          .getElementById("sample")
+          .value
+          .trim();
+
+
+      /*
+      TERMS
+      */
+
+      const terms =
+        form.querySelector(
+          '.terms input[type="checkbox"]'
+        ).checked;
+
+
+      /*
+      VALIDATION
+      */
+
+      if (
+        !firstName ||
+        !lastName ||
+        !email ||
+        !phone ||
+        !terms
+      ) {
+
+        alert(
+          "Please fill all required information."
+        );
+
+        return;
+
+      }
+
+
+      /*
+      LOADING
+      */
+
+      submitButton.disabled = true;
+
+      submitButton.textContent =
+        "Submitting Application...";
+
+
+      /*
+      =========================
+      SAVE PROFILE
+      =========================
+      */
+
+      try {
+
+        const {
+          error
+        } = await supabase
+          .from("profile")
+          .upsert({
+
+            id: user.id,
+
+            full_name:
+              firstName + " " + lastName,
+
+            email:
+              email,
+
+            phone:
+              phone,
+
+            role:
+              "editor",
+
+            experience:
+              experience,
+
+            video_types:
+              videoTypes,
+
+            about:
+              about,
+
+            software:
+              software,
+
+            skills:
+              skillsText,
+
+            portfolio:
+              portfolio,
+
+            rate_type:
+              rateType,
+
+            rate:
+              rate ? Number(rate) : null,
+
+            availability:
+              availability,
+
+            working_hours:
+              hours,
+
+            best_sample:
+              sample,
+
+            verification_status:
+              "pending"
+
+          });
+
+
+        if (error) {
+
+          console.error(
+            "PROFILE ERROR:",
+            error
+          );
+
+          throw error;
+
+        }
+
+
+        /*
+        SUCCESS
+        */
+
+        submitButton.textContent =
+          "Application Submitted ✓";
+
+
+        submitButton.style.opacity =
+          "0.7";
+
+
+        alert(
+          "Your editor application has been submitted successfully! It will be reviewed by EDIT24/7."
+        );
+
+
+        /*
+        REDIRECT
+        */
+
+        setTimeout(function() {
+
+          window.location.href =
+            "editor-dashboard.html";
+
+        }, 1000);
+
+
+      } catch (error) {
+
+        console.error(
+          "APPLICATION ERROR:",
+          error
+        );
+
+
+        alert(
+          error.message ||
+          "Application could not be submitted."
+        );
+
+
+        submitButton.disabled =
+          false;
+
+
+        submitButton.textContent =
+          "Submit Editor Application →";
+
+      }
+
+    }
+  );
+
+</script>
 
 </body>
 </html>
