@@ -801,12 +801,15 @@
     from "https://esm.sh/@supabase/supabase-js@2";
 
 
+  /* =========================
+     SUPABASE
+  ========================= */
+
   const SUPABASE_URL =
     "https://elnjavwjxgkiretyxbtt.supabase.co";
 
   const SUPABASE_KEY =
     "sb_publishable_FXhmywNoVuWiwP4PJ1UHUQ_LwNG6QSW";
-
 
   const supabase =
     createClient(
@@ -815,25 +818,51 @@
     );
 
 
-  /*
-  =========================
-  CHECK LOGIN
-  =========================
-  */
+  /* =========================
+     GET FORM
+  ========================= */
+
+  const form =
+    document.querySelector(".form-box form");
+
+  const submitButton =
+    form.querySelector(".submit-btn");
+
+
+  /* =========================
+     CHECK LOGIN
+  ========================= */
 
   const {
     data: {
       session
-    }
+    },
+    error: sessionError
   } = await supabase.auth.getSession();
+
+
+  if (sessionError) {
+
+    console.error(
+      "SESSION ERROR:",
+      sessionError
+    );
+
+  }
 
 
   if (!session) {
 
+    alert(
+      "Please login first."
+    );
+
     window.location.href =
       "login.html";
 
-    throw new Error("User is not logged in.");
+    throw new Error(
+      "User is not logged in."
+    );
 
   }
 
@@ -842,49 +871,33 @@
     session.user;
 
 
-  const metadata =
-    user.user_metadata || {};
+  /* =========================
+     CHECK EDITOR ROLE
+  ========================= */
+
+  const userRole =
+    user.user_metadata?.role;
 
 
-  /*
-  =========================
-  CHECK EDITOR ROLE
-  =========================
-  */
-
-  if (metadata.role !== "editor") {
+  if (userRole !== "editor") {
 
     alert(
-      "Only editor accounts can submit an editor application."
+      "This page is only available for editor accounts."
     );
 
     window.location.href =
-      "customer-dashboard.html";
+      "login.html";
 
-    throw new Error("Not an editor.");
+    throw new Error(
+      "User is not an editor."
+    );
 
   }
 
 
-  /*
-  =========================
-  GET FORM
-  =========================
-  */
-
-  const form =
-    document.querySelector(".form-box form");
-
-
-  const submitButton =
-    form.querySelector(".submit-btn");
-
-
-  /*
-  =========================
-  SUBMIT APPLICATION
-  =========================
-  */
+  /* =========================
+     SUBMIT FORM
+  ========================= */
 
   form.addEventListener(
     "submit",
@@ -893,9 +906,9 @@
       event.preventDefault();
 
 
-      /*
-      GET BASIC INFORMATION
-      */
+      /* =========================
+         BASIC INFORMATION
+      ========================= */
 
       const firstName =
         document
@@ -925,9 +938,9 @@
           .trim();
 
 
-      /*
-      EXPERIENCE
-      */
+      /* =========================
+         EXPERIENCE
+      ========================= */
 
       const experience =
         document
@@ -942,80 +955,131 @@
           .trim();
 
 
-      /*
-      SKILLS
-      */
+      /* =========================
+         VIDEO TYPES
+      ========================= */
 
-      const skillsText =
+      const videoTypes = [];
+
+      document
+        .querySelectorAll(
+          'input[type="checkbox"]'
+        )
+        .forEach(function(input) {
+
+          /*
+            First group of checkboxes =
+            video types.
+
+            We identify them by their
+            parent .skill text.
+          */
+
+          const text =
+            input.parentElement
+              .textContent
+              .trim();
+
+
+          if (
+            [
+              "YouTube Videos",
+              "Reels / Shorts",
+              "Podcasts",
+              "Gaming",
+              "Weddings",
+              "Advertisements",
+              "Documentary",
+              "Social Media"
+            ].includes(text)
+            &&
+            input.checked
+          ) {
+
+            videoTypes.push(text);
+
+          }
+
+        });
+
+
+      /* =========================
+         SOFTWARE
+      ========================= */
+
+      const software = [];
+
+      document
+        .querySelectorAll(
+          'input[type="checkbox"]'
+        )
+        .forEach(function(input) {
+
+          const text =
+            input.parentElement
+              .textContent
+              .trim();
+
+
+          if (
+            [
+              "Adobe Premiere Pro",
+              "After Effects",
+              "DaVinci Resolve",
+              "Final Cut Pro",
+              "CapCut",
+              "Other Software"
+            ].includes(text)
+            &&
+            input.checked
+          ) {
+
+            software.push(text);
+
+          }
+
+        });
+
+
+      /* =========================
+         STRONGEST SKILLS
+      ========================= */
+
+      const skills =
         document
           .getElementById("skills")
           .value
           .trim();
 
 
-      /*
-      SOFTWARE
-      */
+      /* =========================
+         PORTFOLIO
+      ========================= */
 
-      const software =
-        Array.from(
-          document.querySelectorAll(
-            ".section:nth-of-type(3) .skill input:checked"
-          )
-        ).map(function(input) {
+      const portfolio = [];
 
-          return input.parentElement
-            .textContent
-            .trim();
-
-        });
-
-
-      /*
-      VIDEO TYPES
-      */
-
-      const videoTypes =
-        Array.from(
-          document.querySelectorAll(
-            ".section:nth-of-type(2) .skill input:checked"
-          )
-        ).map(function(input) {
-
-          return input.parentElement
-            .textContent
-            .trim();
-
-        });
-
-
-      /*
-      PORTFOLIO
-      */
-
-      const portfolioInputs =
-        document.querySelectorAll(
+      document
+        .querySelectorAll(
           '.portfolio-item input[type="url"]'
-        );
+        )
+        .forEach(function(input) {
+
+          const value =
+            input.value.trim();
 
 
-      const portfolio =
-        Array.from(portfolioInputs)
-          .map(function(input) {
+          if (value) {
 
-            return input.value.trim();
+            portfolio.push(value);
 
-          })
-          .filter(function(url) {
+          }
 
-            return url !== "";
-
-          });
+        });
 
 
-      /*
-      RATE
-      */
+      /* =========================
+         RATE
+      ========================= */
 
       const rateType =
         document
@@ -1023,15 +1087,22 @@
           .value;
 
 
-      const rate =
+      const rateValue =
         document
           .getElementById("rate")
-          .value;
+          .value
+          .trim();
 
 
-      /*
-      AVAILABILITY
-      */
+      const rate =
+        rateValue
+          ? Number(rateValue)
+          : null;
+
+
+      /* =========================
+         AVAILABILITY
+      ========================= */
 
       const availability =
         document
@@ -1039,27 +1110,27 @@
           .value;
 
 
-      const hours =
+      const workingHours =
         document
           .getElementById("hours")
           .value
           .trim();
 
 
-      /*
-      BEST SAMPLE
-      */
+      /* =========================
+         BEST SAMPLE
+      ========================= */
 
-      const sample =
+      const bestSample =
         document
           .getElementById("sample")
           .value
           .trim();
 
 
-      /*
-      TERMS
-      */
+      /* =========================
+         TERMS
+      ========================= */
 
       const terms =
         form.querySelector(
@@ -1067,20 +1138,19 @@
         ).checked;
 
 
-      /*
-      VALIDATION
-      */
+      /* =========================
+         VALIDATION
+      ========================= */
 
       if (
         !firstName ||
         !lastName ||
         !email ||
-        !phone ||
-        !terms
+        !phone
       ) {
 
         alert(
-          "Please fill all required information."
+          "Please fill in all required fields."
         );
 
         return;
@@ -1088,9 +1158,20 @@
       }
 
 
-      /*
-      LOADING
-      */
+      if (!terms) {
+
+        alert(
+          "Please accept the editor terms."
+        );
+
+        return;
+
+      }
+
+
+      /* =========================
+         LOADING
+      ========================= */
 
       submitButton.disabled = true;
 
@@ -1098,13 +1179,12 @@
         "Submitting Application...";
 
 
-      /*
-      =========================
-      SAVE PROFILE
-      =========================
-      */
-
       try {
+
+
+        /* =========================
+           SAVE TO PROFILE TABLE
+        ========================= */
 
         const {
           error
@@ -1112,7 +1192,8 @@
           .from("profile")
           .upsert({
 
-            id: user.id,
+            id:
+              user.id,
 
             full_name:
               firstName + " " + lastName,
@@ -1127,37 +1208,37 @@
               "editor",
 
             experience:
-              experience,
+              experience || null,
 
             video_types:
               videoTypes,
 
             about:
-              about,
+              about || null,
 
             software:
               software,
 
             skills:
-              skillsText,
+              skills || null,
 
             portfolio:
               portfolio,
 
             rate_type:
-              rateType,
+              rateType || null,
 
             rate:
-              rate ? Number(rate) : null,
+              rate,
 
             availability:
-              availability,
+              availability || null,
 
             working_hours:
-              hours,
+              workingHours || null,
 
             best_sample:
-              sample,
+              bestSample || null,
 
             verification_status:
               "pending"
@@ -1165,10 +1246,14 @@
           });
 
 
+        /* =========================
+           DATABASE ERROR
+        ========================= */
+
         if (error) {
 
           console.error(
-            "PROFILE ERROR:",
+            "SUPABASE ERROR:",
             error
           );
 
@@ -1177,33 +1262,29 @@
         }
 
 
-        /*
-        SUCCESS
-        */
+        /* =========================
+           SUCCESS
+        ========================= */
 
         submitButton.textContent =
           "Application Submitted ✓";
 
 
-        submitButton.style.opacity =
-          "0.7";
-
-
         alert(
-          "Your editor application has been submitted successfully! It will be reviewed by EDIT24/7."
+          "Your editor application has been submitted successfully!"
         );
 
 
-        /*
-        REDIRECT
-        */
+        /* =========================
+           REDIRECT
+        ========================= */
 
         setTimeout(function() {
 
           window.location.href =
             "editor-dashboard.html";
 
-        }, 1000);
+        }, 800);
 
 
       } catch (error) {
@@ -1216,7 +1297,7 @@
 
         alert(
           error.message ||
-          "Application could not be submitted."
+          "Something went wrong. Please try again."
         );
 
 
@@ -1229,10 +1310,10 @@
 
       }
 
-    }
-  );
+    });
 
 </script>
+      
 
 </body>
 </html>
