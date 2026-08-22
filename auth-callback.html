@@ -67,6 +67,7 @@
     .error {
       display: none;
       color: #ff8b84;
+      margin-top: 15px;
     }
 
     @keyframes spin {
@@ -85,14 +86,14 @@
       EDIT<span>24/7</span>
     </div>
 
-    <div class="loader"></div>
+    <div class="loader" id="loader"></div>
 
     <h1 id="title">
       Verifying your account...
     </h1>
 
     <p id="text">
-      Please wait while we complete your sign in.
+      Please wait while we complete your verification.
     </p>
 
     <p id="error" class="error"></p>
@@ -125,40 +126,111 @@
       try {
 
         /*
-          Supabase automatically reads
-          the verification information
-          from the URL.
+          Supabase confirmation email can
+          return access_token in the URL hash.
+
+          Example:
+
+          #access_token=...
+          &refresh_token=...
+          &type=signup
         */
 
-        const {
-          data: {
-            session
-          },
-          error
-        } = await supabase.auth.getSession();
+        const hash =
+          window.location.hash;
 
 
-        if (error) {
-          throw error;
-        }
-
-
-        if (!session) {
+        if (!hash) {
 
           throw new Error(
-            "Verification completed, but no active session was found."
+            "No verification information was found in the URL."
           );
 
         }
 
 
+        /*
+          Read the hash parameters.
+        */
+
+        const params =
+          new URLSearchParams(
+            hash.substring(1)
+          );
+
+
+        const accessToken =
+          params.get("access_token");
+
+        const refreshToken =
+          params.get("refresh_token");
+
+        const type =
+          params.get("type");
+
+
+        if (!accessToken) {
+
+          throw new Error(
+            "Verification token was not found."
+          );
+
+        }
+
+
+        /*
+          Create the Supabase session
+          using the tokens returned by
+          the confirmation email.
+        */
+
+        const {
+          data,
+          error
+        } =
+          await supabase.auth.setSession({
+
+            access_token:
+              accessToken,
+
+            refresh_token:
+              refreshToken || ""
+
+          });
+
+
+        if (error) {
+
+          throw error;
+
+        }
+
+
+        if (!data.session) {
+
+          throw new Error(
+            "Unable to create an active session."
+          );
+
+        }
+
+
+        /*
+          Get verified user.
+        */
+
         const user =
-          session.user;
+          data.session.user;
 
 
         const role =
-          user.user_metadata?.role || "customer";
+          user.user_metadata?.role ||
+          "customer";
 
+
+        /*
+          SUCCESS
+        */
 
         document.getElementById("title")
           .textContent =
@@ -167,12 +239,11 @@
 
         document.getElementById("text")
           .textContent =
-          "Redirecting you to your EDIT24/7 dashboard...";
+          "Your EDIT24/7 account is ready. Redirecting...";
 
 
         /*
-          Remove authentication tokens
-          from the browser URL.
+          Remove tokens from URL.
         */
 
         window.history.replaceState(
@@ -181,6 +252,10 @@
           window.location.pathname
         );
 
+
+        /*
+          Redirect according to role.
+        */
 
         setTimeout(function() {
 
@@ -207,7 +282,7 @@
         );
 
 
-        document.querySelector(".loader")
+        document.getElementById("loader")
           .style.display = "none";
 
 
