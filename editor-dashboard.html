@@ -737,6 +737,181 @@
   </div>
 
 </div>
+<script type="module">
 
+  import { createClient }
+    from "https://esm.sh/@supabase/supabase-js@2";
+
+
+  const SUPABASE_URL =
+    "https://elnjavwjxgkiretyxbtt.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable_FXhmywNoVuWiwP4PJ1UHUQ_LwNG6QSW";
+
+
+  const supabase =
+    createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+
+  /*
+    CHECK LOGIN
+  */
+
+  const {
+    data: {
+      session
+    }
+  } = await supabase.auth.getSession();
+
+
+  /*
+    USER LOGIN NAHI HAI
+  */
+
+  if (!session) {
+
+    window.location.href =
+      "login.html";
+
+  }
+
+
+  /*
+    USER INFORMATION
+  */
+
+  const user =
+    session.user;
+
+
+  const metadata =
+    user.user_metadata || {};
+
+
+  const fullName =
+    metadata.full_name ||
+    "Editor";
+
+
+  const role =
+    metadata.role ||
+    "editor";
+
+
+  /*
+    CHECK ROLE
+  */
+
+  if (role !== "editor") {
+
+    window.location.href =
+      "login.html";
+
+  }
+
+
+  /*
+    TOPBAR NAME
+  */
+
+  const profileName =
+    document.querySelector(".profile span");
+
+  if (profileName) {
+
+    profileName.textContent =
+      fullName;
+
+  }
+
+
+  /*
+    AVATAR
+  */
+
+  const avatar =
+    document.querySelector(".avatar");
+
+  if (avatar) {
+
+    const nameParts =
+      fullName.split(" ");
+
+    const first =
+      nameParts[0]?.charAt(0) || "";
+
+    const last =
+      nameParts.length > 1
+        ? nameParts[nameParts.length - 1].charAt(0)
+        : "";
+
+    avatar.textContent =
+      (first + last).toUpperCase();
+
+  }
+
+
+  /*
+    WELCOME MESSAGE
+  */
+
+  const welcomeHeading =
+    document.querySelector(".welcome h2");
+
+  if (welcomeHeading) {
+
+    welcomeHeading.textContent =
+      `Welcome, ${fullName}! 🎬`;
+
+  }
+
+
+  /*
+    LOGOUT
+  */
+
+  const logoutLink =
+    document.querySelector(
+      'a[href="login.html"]'
+    );
+
+  if (logoutLink) {
+
+    logoutLink.addEventListener(
+      "click",
+      async function(event) {
+
+        event.preventDefault();
+
+        const {
+          error
+        } = await supabase.auth.signOut();
+
+
+        if (error) {
+
+          console.error(
+            "Logout error:",
+            error
+          );
+
+          return;
+
+        }
+
+
+        window.location.href =
+          "login.html";
+
+      }
+    );
+
+  }
+
+</script>
 </body>
 </html>
